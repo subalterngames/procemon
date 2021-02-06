@@ -1,0 +1,24 @@
+{
+  "imagenet": "metal",
+  "nouns": [
+    "steel",
+    "aluminium",
+    "zinc",
+    "titanium",
+    "brass",
+    "electrum",
+    "silver",
+    "sterling",
+    "gold",
+    "pewter",
+    "lead",
+    "platinum",
+    "copper",
+    "chromium",
+    "iron",
+    "nickel",
+    "bronze"
+  ],
+  "type": "metal",
+  "wikipedia": "metal"
+}
