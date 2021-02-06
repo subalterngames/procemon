@@ -28,5 +28,5 @@ setup(
     ],
     keywords='image pokemon card procgen',
     packages=find_packages(),
-    install_requires=["requests", "markovify", "beautifulsoup4"],
+    install_requires=["requests", "markovify", "beautifulsoup4", "gensim"],
 )
