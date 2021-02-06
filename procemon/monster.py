@@ -5,6 +5,8 @@ from requests import get
 from bs4 import BeautifulSoup
 import markovify
 from procemon.monster_type import MonsterType
+from procemon.move import Move
+from procemon.rarity import Rarity
 
 
 class Monster:
@@ -17,15 +19,26 @@ class Monster:
     """
     WIKIPEDIA: Dict[str, str] = dict()
 
-    def __init__(self, types: Tuple[MonsterType, MonsterType]):
+    def __init__(self, types: Tuple[MonsterType, MonsterType], rarity: Rarity, strong_against: str):
         """
         :param types: The types associated with this monster.
+        :param rarity: The rarity of this monster. Determines its overall strength and coolness.
+        :param strong_against: The type of monster that this monster is strong against.
         """
 
         """:field
         The names of my two types as a tuple.
         """
         self.types: Tuple[str, str] = (types[0].monster_type, types[1].monster_type)
+
+        """:field
+        The rarity of this monster. Determines its overall strength and coolness.
+        """
+        self.rarity: Rarity = rarity
+        """:field
+        The type of monster that this monster is strong against.
+        """
+        self.strong_against: str = strong_against
 
         # Get a random word from each name.
         words = []
@@ -74,7 +87,7 @@ class Monster:
         """:field
         A description of the monster.
         """
-        self.description = model.make_short_sentence(80)
+        self.description: str = model.make_short_sentence(80)
         # Make a few attempts.
         num_attempts = 0
         while num_attempts < 4 and self.description is None:
@@ -82,6 +95,23 @@ class Monster:
             self.description = model.make_short_sentence(80)
         if self.description is None:
             print(f"No description: {wikipedia_pages}")
+
+        """:field
+        The monster's moves as `Move` objects.
+        """
+        self.moves: List[Move] = list()
+        for t in self.types:
+            self.moves.append(Move(monster_type=t, rarity=rarity))
+
+        if rarity == Rarity.common:
+            """:field
+            The monster's hitpoints.
+            """
+            self.hp: int = randint(2, 5)
+        elif rarity == Rarity.uncommon:
+            self.hp: int = randint(3, 7)
+        else:
+            self.hp: int = randint(5, 12)
 
     @staticmethod
     def get_wiki_text(page: str) -> str:
