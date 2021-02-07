@@ -1,5 +1,6 @@
 {
   "imagenet": "diatom",
+  "monster_type": "diatom",
   "nouns": [
     "diatom",
     "microflora",
@@ -1894,6 +1895,5 @@
     "autophyte",
     "autotroph"
   ],
-  "type": "diatom",
   "wikipedia": "diatom"
 }

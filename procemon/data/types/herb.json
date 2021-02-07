@@ -1,5 +1,6 @@
 {
   "imagenet": "herb",
+  "monster_type": "herb",
   "nouns": [
     "bolivian",
     "verbena",
@@ -57,6 +58,5 @@
     "mint",
     "curry"
   ],
-  "type": "herb",
   "wikipedia": "herb"
 }

@@ -1,5 +1,6 @@
 {
   "imagenet": "gem",
+  "monster_type": "gemstone",
   "nouns": [
     "papagoite",
     "zoisite",
@@ -348,6 +349,5 @@
     "clinochlore",
     "pearl"
   ],
-  "type": "gemstone",
   "wikipedia": "gemstone"
 }

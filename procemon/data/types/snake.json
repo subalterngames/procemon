@@ -1,5 +1,6 @@
 {
   "imagenet": "snake",
+  "monster_type": "snake",
   "nouns": [
     "serpent",
     "ophidian",
@@ -34,6 +35,5 @@
     "massasauga",
     "massasauga"
   ],
-  "type": "snake",
   "wikipedia": "snake"
 }

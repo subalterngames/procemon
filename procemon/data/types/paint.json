@@ -1,5 +1,6 @@
 {
   "imagenet": "paint",
+  "monster_type": "paint",
   "nouns": [
     "perserverance",
     "retro",
@@ -878,6 +879,5 @@
     "cloak",
     "canadian"
   ],
-  "type": "paint",
   "wikipedia": "paint"
 }

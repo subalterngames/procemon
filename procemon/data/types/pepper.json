@@ -1,5 +1,6 @@
 {
   "imagenet": "pepper",
+  "monster_type": "pepper",
   "nouns": [
     "santa",
     "chilaca",
@@ -36,6 +37,5 @@
     "aleppo",
     "padr\u00f3n"
   ],
-  "type": "pepper",
   "wikipedia": "Capsicum"
 }

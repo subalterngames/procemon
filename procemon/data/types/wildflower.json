@@ -1,5 +1,6 @@
 {
   "imagenet": "wildflower",
+  "monster_type": "wildflower",
   "nouns": [
     "wildflower",
     "snowball",
@@ -176,6 +177,5 @@
     "madder",
     "munjeet"
   ],
-  "type": "wildflower",
   "wikipedia": "wildflower"
 }

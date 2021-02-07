@@ -1,5 +1,6 @@
 {
   "imagenet": "book",
+  "monster_type": "book",
   "nouns": [
     "curiosa",
     "workbook",
@@ -58,6 +59,5 @@
     "bestseller",
     "copybook"
   ],
-  "type": "book",
   "wikipedia": "book"
 }

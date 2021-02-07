@@ -1,5 +1,6 @@
 {
   "imagenet": "land",
+  "monster_type": "geography",
   "nouns": [
     "alkaline",
     "caldera",
@@ -484,6 +485,5 @@
     "benthic",
     "kiosk"
   ],
-  "type": "geography",
   "wikipedia": "geography"
 }

@@ -1,5 +1,6 @@
 {
   "imagenet": "soil",
+  "monster_type": "soil",
   "nouns": [
     "dirt",
     "clunch",
@@ -35,6 +36,5 @@
     "subsoil",
     "undersoil"
   ],
-  "type": "soil",
   "wikipedia": "soil"
 }

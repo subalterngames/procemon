@@ -1,5 +1,6 @@
 {
   "imagenet": "wind",
+  "monster_type": "wind",
   "nouns": [
     "sudestada",
     "nor'easter",
@@ -122,6 +123,5 @@
     "kona",
     "lodos"
   ],
-  "type": "wind",
   "wikipedia": "wind"
 }

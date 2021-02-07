@@ -1,5 +1,6 @@
 {
   "imagenet": "blob",
+  "monster_type": "blob",
   "nouns": [
     "space",
     "swath",
@@ -80,6 +81,5 @@
     "crenel",
     "crenelle"
   ],
-  "type": "blob",
   "wikipedia": "Physarum_polycephalum"
 }

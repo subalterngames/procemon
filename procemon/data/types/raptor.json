@@ -1,5 +1,6 @@
 {
   "imagenet": "raptor",
+  "monster_type": "raptor",
   "nouns": [
     "hawk",
     "eyas",
@@ -36,6 +37,5 @@
     "hooter",
     "owlet"
   ],
-  "type": "raptor",
   "wikipedia": "Bird_of_prey"
 }

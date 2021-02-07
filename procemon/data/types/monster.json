@@ -1,5 +1,6 @@
 {
   "imagenet": "monster",
+  "monster_type": "monster",
   "nouns": [
     "wendigo",
     "ghost",
@@ -79,6 +80,5 @@
     "zombie",
     "dragon"
   ],
-  "type": "monster",
   "wikipedia": "monster"
 }

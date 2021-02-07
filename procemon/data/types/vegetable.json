@@ -1,5 +1,6 @@
 {
   "imagenet": "vegetable",
+  "monster_type": "vegetable",
   "nouns": [
     "jicama",
     "mamey",
@@ -122,6 +123,5 @@
     "salad",
     "cilantro"
   ],
-  "type": "vegetable",
   "wikipedia": "vegetable"
 }

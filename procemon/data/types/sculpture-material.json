@@ -1,5 +1,6 @@
 {
   "imagenet": "clay",
+  "monster_type": "sculpture",
   "nouns": [
     "milliput",
     "faux",
@@ -52,6 +53,5 @@
     "ceramic",
     "plasticine"
   ],
-  "type": "sculpture",
   "wikipedia": "sculpture"
 }

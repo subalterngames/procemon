@@ -1,5 +1,6 @@
 {
   "imagenet": "appliance",
+  "monster_type": "appliance",
   "nouns": [
     "compactor",
     "sandwich",
@@ -121,6 +122,5 @@
     "bread",
     "cleaner"
   ],
-  "type": "appliance",
   "wikipedia": "Home_appliance"
 }

@@ -1,5 +1,6 @@
 {
   "imagenet": "carriage",
+  "monster_type": "carriage",
   "nouns": [
     "pram",
     "stroller",
@@ -177,6 +178,5 @@
     "wain",
     "wagon"
   ],
-  "type": "carriage",
   "wikipedia": "carriage"
 }

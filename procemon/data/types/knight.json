@@ -1,5 +1,6 @@
 {
   "imagenet": "knight",
+  "monster_type": "knight",
   "nouns": [
     "bachelor",
     "banneret",
@@ -31,6 +32,5 @@
     "cavalier",
     "chevalier"
   ],
-  "type": "knight",
   "wikipedia": "knight"
 }

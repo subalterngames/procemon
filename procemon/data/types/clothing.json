@@ -1,5 +1,6 @@
 {
   "imagenet": "clothing",
+  "monster_type": "clothing",
   "nouns": [
     "blazer",
     "blouse",
@@ -86,6 +87,5 @@
     "shoes",
     "nightgown"
   ],
-  "type": "clothing",
   "wikipedia": "clothing"
 }

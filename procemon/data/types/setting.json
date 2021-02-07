@@ -1,5 +1,6 @@
 {
   "imagenet": "setting",
+  "monster_type": "setting",
   "nouns": [
     "mysterious",
     "peaceful",
@@ -194,6 +195,5 @@
     "progress",
     "ordered"
   ],
-  "type": "setting",
   "wikipedia": "Location"
 }

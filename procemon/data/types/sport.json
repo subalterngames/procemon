@@ -1,5 +1,6 @@
 {
   "imagenet": "sport",
+  "monster_type": "sport",
   "nouns": [
     "canoe",
     "khela",
@@ -885,6 +886,5 @@
     "casterboarding",
     "band"
   ],
-  "type": "sport",
   "wikipedia": "sport"
 }

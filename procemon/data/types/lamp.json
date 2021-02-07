@@ -1,5 +1,6 @@
 {
   "imagenet": "lamp",
+  "monster_type": "lamp",
   "nouns": [
     "candle",
     "taper",
@@ -38,6 +39,5 @@
     "flambeau",
     "sunlamp"
   ],
-  "type": "lamp",
   "wikipedia": "Electric_light"
 }

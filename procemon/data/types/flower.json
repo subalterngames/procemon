@@ -1,5 +1,6 @@
 {
   "imagenet": "flower",
+  "monster_type": "flower",
   "nouns": [
     "delphinium",
     "jasmine",
@@ -70,6 +71,5 @@
     "iris",
     "marigold"
   ],
-  "type": "flower",
   "wikipedia": "flower"
 }

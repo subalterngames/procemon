@@ -1,5 +1,6 @@
 {
   "imagenet": "cannabis",
+  "monster_type": "cannabis",
   "nouns": [
     "rider",
     "autoflower",
@@ -410,6 +411,5 @@
     "grapefruit",
     "mint"
   ],
-  "type": "cannabis",
   "wikipedia": "cannabis"
 }

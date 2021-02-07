@@ -1,5 +1,6 @@
 {
   "imagenet": "hazard",
+  "monster_type": "hazard",
   "nouns": [
     "rockslide",
     "landslide",
@@ -83,6 +84,5 @@
     "industrial",
     "megathrust"
   ],
-  "type": "hazard",
   "wikipedia": "hazard"
 }

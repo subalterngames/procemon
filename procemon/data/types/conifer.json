@@ -1,5 +1,6 @@
 {
   "imagenet": "conifer",
+  "monster_type": "conifer",
   "nouns": [
     "pine",
     "pinon",
@@ -31,6 +32,5 @@
     "miro",
     "matai"
   ],
-  "type": "conifer",
   "wikipedia": "conifer"
 }

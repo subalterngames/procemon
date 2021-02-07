@@ -1,5 +1,6 @@
 {
   "imagenet": "dinosaur",
+  "monster_type": "dinosaur",
   "nouns": [
     "kangnasaurus",
     "lophostropheus",
@@ -1451,6 +1452,5 @@
     "gresslyosaurus",
     "stenopelix"
   ],
-  "type": "dinosaur",
   "wikipedia": "dinosaur"
 }

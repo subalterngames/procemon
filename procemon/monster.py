@@ -1,5 +1,5 @@
 import re
-from random import choice, randint
+from random import choice, randint, shuffle
 from typing import Tuple, List, Dict
 from requests import get
 from bs4 import BeautifulSoup
@@ -19,12 +19,21 @@ class Monster:
     """
     WIKIPEDIA: Dict[str, str] = dict()
 
-    def __init__(self, types: Tuple[MonsterType, MonsterType], rarity: Rarity, strong_against: str):
+    def __init__(self, primary_type: MonsterType, all_types: List[MonsterType], generic_verbs: List[str],
+                 type_verbs: Dict[str, List[str]], type_adjectives: Dict[str, List[str]], rarity: Rarity):
         """
-        :param types: The types associated with this monster.
+        :param all_types: All possible monster types in the dex.
+        :param primary_type: The primary type of the monster. The monster will have a second type, chosen randomly.
+        :param type_adjectives: Adjectives per monster type.
+        :param type_verbs: Verbs per monster type.
+        :param generic_verbs: Type-agnostic verbs.
         :param rarity: The rarity of this monster. Determines its overall strength and coolness.
-        :param strong_against: The type of monster that this monster is strong against.
         """
+
+        types: List[MonsterType] = [primary_type]
+        # Get a random second type.
+        possible_types = [t for t in all_types if t.monster_type != primary_type.monster_type]
+        types.append(choice(possible_types))
 
         """:field
         The names of my two types as a tuple.
@@ -35,10 +44,19 @@ class Monster:
         The rarity of this monster. Determines its overall strength and coolness.
         """
         self.rarity: Rarity = rarity
+
+        # Get the index of the type I am strong against.
+        strength_index = 0
+        for i in range(len(all_types)):
+            if all_types[i].monster_type == primary_type.monster_type:
+                if i == len(all_types) - 1:
+                    strength_index = 0
+                else:
+                    strength_index = i + 1
         """:field
         The type of monster that this monster is strong against.
         """
-        self.strong_against: str = strong_against
+        self.strong_against: str = all_types[strength_index].monster_type
 
         # Get a random word from each name.
         words = []
@@ -76,14 +94,24 @@ class Monster:
 
         # Get a list of potential wiki words.
         wikipedia_pages: List[str] = words[:]
+        shuffle(wikipedia_pages)
         for t in types:
-            wikipedia_pages.append(t.wikipedia)
+            wikipedia_pages.insert(0, t.wikipedia)
 
         txt = ""
-        for c, w in zip(self.types, wikipedia_pages):
+        num_pages = 0
+        for w in wikipedia_pages:
             # Try to get a wikipedia page of the word.
-            txt += Monster.get_wiki_text(page=w)
-        model = markovify.Text(txt)
+            wiki_text = Monster.get_wiki_text(page=w)
+            if wiki_text is not None:
+                txt += wiki_text + "\n"
+                num_pages += 1
+            if num_pages >= 4:
+                break
+        try:
+            model = markovify.Text(txt)
+        except KeyError:
+            raise Exception(txt)
         """:field
         A description of the monster.
         """
@@ -100,8 +128,9 @@ class Monster:
         The monster's moves as `Move` objects.
         """
         self.moves: List[Move] = list()
-        for t in self.types:
-            self.moves.append(Move(monster_type=t, rarity=rarity))
+        for i in range(2):
+            self.moves.append(Move(monster_type=self.types[0], rarity=rarity, type_adjectives=type_adjectives,
+                                   type_verbs=type_verbs, generic_verbs=generic_verbs))
 
         if rarity == Rarity.common:
             """:field

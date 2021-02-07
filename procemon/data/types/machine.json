@@ -1,5 +1,6 @@
 {
   "imagenet": "machine",
+  "monster_type": "machine",
   "nouns": [
     "ramp",
     "incline",
@@ -42,6 +43,5 @@
     "millwheel",
     "waterwheel"
   ],
-  "type": "machine",
   "wikipedia": "machine"
 }

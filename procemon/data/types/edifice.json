@@ -1,5 +1,6 @@
 {
   "imagenet": "edifice",
+  "monster_type": "edifice",
   "nouns": [
     "abattoir",
     "shambles",
@@ -204,6 +205,5 @@
     "bawdyhouse",
     "cathouse"
   ],
-  "type": "edifice",
   "wikipedia": "edifice"
 }

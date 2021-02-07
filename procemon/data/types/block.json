@@ -1,5 +1,6 @@
 {
   "imagenet": "block",
+  "monster_type": "block",
   "nouns": [
     "cake",
     "tablet",
@@ -35,6 +36,5 @@
     "tessera",
     "tessella"
   ],
-  "type": "block",
   "wikipedia": "Toy_block"
 }

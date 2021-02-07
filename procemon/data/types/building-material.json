@@ -1,5 +1,6 @@
 {
   "imagenet": "building",
+  "monster_type": "construction",
   "nouns": [
     "shiplap",
     "glass",
@@ -53,6 +54,5 @@
     "sand",
     "glue-laminate"
   ],
-  "type": "construction",
   "wikipedia": "construction"
 }

@@ -1,5 +1,6 @@
 {
   "imagenet": "insect",
+  "monster_type": "insect",
   "nouns": [
     "ephemeron",
     "ephemeral",
@@ -203,6 +204,5 @@
     "imago",
     "queen"
   ],
-  "type": "insect",
   "wikipedia": "insect"
 }

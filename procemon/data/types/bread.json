@@ -1,5 +1,6 @@
 {
   "imagenet": "bread",
+  "monster_type": "bread",
   "nouns": [
     "cornbread",
     "pumpernickel",
@@ -31,6 +32,5 @@
     "paratha",
     "ciabatta"
   ],
-  "type": "bread",
   "wikipedia": "bread"
 }

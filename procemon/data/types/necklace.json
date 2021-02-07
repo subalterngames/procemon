@@ -1,5 +1,6 @@
 {
   "imagenet": "necklace",
+  "monster_type": "necklace",
   "nouns": [
     "chain",
     "strand",
@@ -35,6 +36,5 @@
     "sunburst",
     "bijou"
   ],
-  "type": "necklace",
   "wikipedia": "necklace"
 }

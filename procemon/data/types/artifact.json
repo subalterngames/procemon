@@ -1,5 +1,6 @@
 {
   "imagenet": "artifact",
+  "monster_type": "artifact",
   "nouns": [
     "damaging",
     "map",
@@ -57,6 +58,5 @@
     "blade",
     "transitional"
   ],
-  "type": "artifact",
   "wikipedia": "Artifact_(archaeology)"
 }

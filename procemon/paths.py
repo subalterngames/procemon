@@ -7,5 +7,9 @@ DATA_DIRECTORY = Path(resource_filename(__name__, "data"))
 TYPES_DIRECTORY = DATA_DIRECTORY.joinpath("types")
 # The path to the moves files.
 MOVES_DIRECTORY = DATA_DIRECTORY.joinpath("moves")
+# The path to the images files.
+IMAGES_DIRECTORY = DATA_DIRECTORY.joinpath("images")
+# The path to the font files.
+FONTS_DIRECTORY = DATA_DIRECTORY.joinpath("fonts")
 # The path to the word vector file.
 WORD_VEC_PATH = Path("D:/glove.txt")

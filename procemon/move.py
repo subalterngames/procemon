@@ -1,8 +1,7 @@
 from random import shuffle, random, choice, randint
 from typing import List, Dict
-from gensim.models import KeyedVectors
 from procemon.rarity import Rarity
-from procemon.paths import WORD_VEC_PATH, MOVES_DIRECTORY
+from procemon.paths import MOVES_DIRECTORY
 
 
 class Move:
@@ -12,42 +11,18 @@ class Move:
     """
 
     """:class_var
-    All potential verbs.
-    """
-    VERBS: List[str] = MOVES_DIRECTORY.joinpath("verbs.txt").read_text(encoding="utf-8").split("\n")
-    shuffle(VERBS)
-    """:class_var
-    All potential adjectives.
-    """
-    ADJECTIVES: List[str] = MOVES_DIRECTORY.joinpath("adjectives.txt").read_text(encoding="utf-8").split("\n")
-    shuffle(ADJECTIVES)
-    """:class_var
-    A list of verbs that any move can use. This list is populated the first time it is used.
-    """
-    GENERIC_VERBS: List[str] = list()
-    """:class_var
-    The word vector model.
-    """
-    WV: KeyedVectors = KeyedVectors.load_word2vec_format(str(WORD_VEC_PATH.resolve()), binary=False)
-    """:class_var
-    A dictionary of verbs associated with each type. This is populated the first time it is used.
-    Key = The monster type as a string. Value = A list of verbs.
-    """
-    TYPE_VERBS: Dict[str, List[str]] = dict()
-    """:class_var
-    A dictionary of adjectives associated with each type. This is populated the first time it is used.
-    Key = The monster type as a string. Value = A list of adjectives.
-    """
-    TYPE_ADJECTIVES: Dict[str, List[str]] = dict()
-    """:class_var
     A subset of all possible moods that is chosen randomly per dex. This is populated the first time it is used.
     """
     MOODS: List[str] = list()
 
-    def __init__(self, monster_type: str, rarity: Rarity, force_damage: bool = False, force_no_special: bool = False):
+    def __init__(self, monster_type: str, rarity: Rarity, generic_verbs: List[str], type_verbs: Dict[str, List[str]],
+                 type_adjectives: Dict[str, List[str]], force_damage: bool = False, force_no_special: bool = False):
         """
         :param monster_type: The type of move.
         :param rarity: The rarity of the monster this move belongs to. This is used to decide move's coolness.
+        :param type_adjectives: Adjectives per monster type.
+        :param type_verbs: Verbs per monster type.
+        :param generic_verbs: Type-agnostic verbs.
         :param force_damage: If True, this move will always deal damage. If False, it might deal damage.
         :param force_no_special: If True, this move will never have a special effect.
         """
@@ -64,51 +39,19 @@ class Move:
         The type of move.
         """
         self.type: str = monster_type
-        # Populate the list of generic verbs.
-        if len(Move.GENERIC_VERBS) == 0:
-            for v in Move.VERBS:
-                # If the verb is nearby "attack" then it's a generic verb.
-                try:
-                    d = Move.WV.distance(v, "attack")
-                # This word isn't isn't in the word vector model. Ignore it.
-                except KeyError:
-                    continue
-
-                if d < 0.6:
-                    Move.GENERIC_VERBS.append(v)
-
-        # Assign type-specific words.
-        for pos, lst, generic, num, d in zip([Move.TYPE_VERBS, Move.TYPE_ADJECTIVES], [Move.VERBS, Move.ADJECTIVES],
-                                             [Move.GENERIC_VERBS, []], [12, 12], [0.7, 0.57]):
-            if monster_type not in pos:
-                pos[monster_type] = list()
-                for w in lst:
-                    # Ignore generic words.
-                    if w in generic:
-                        continue
-                    if len(pos[monster_type]) >= 12:
-                        break
-                    # Get the distance between this word and the type.
-                    try:
-                        distance = Move.WV.distance(w, monster_type)
-                    except KeyError:
-                        continue
-                    # If there is a close association, add the word.
-                    if distance < d:
-                        pos[monster_type].append(w)
 
         # Get an adjective.
         if random() < 0.75:
-            adj = choice(Move.TYPE_ADJECTIVES[monster_type])
+            adj = choice(type_adjectives[monster_type])
         else:
             adj = ""
 
         # Choose a type specific verb.
         if random() < 0.45:
-            verb = choice(Move.TYPE_VERBS[monster_type])
+            verb = choice(type_verbs[monster_type])
         # Choose a generic verb.
         else:
-            verb = choice(Move.VERBS)
+            verb = choice(generic_verbs)
 
         if adj != "":
             """:field 
@@ -172,7 +115,7 @@ class Move:
         if special:
             # Add a conditional.
             if random() < 0.4:
-                conditional: str = f"Roll a die. If the roll is above a {randint(1, 5)}, "
+                conditional: str = f"Roll a die. On a {randint(1, 5)} or above, "
             else:
                 conditional: str = ""
 

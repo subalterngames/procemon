@@ -1,5 +1,6 @@
 {
   "imagenet": "hair",
+  "monster_type": "hair",
   "nouns": [
     "coat",
     "pelage",
@@ -75,6 +76,5 @@
     "mane",
     "encolure"
   ],
-  "type": "hair",
   "wikipedia": "hair"
 }

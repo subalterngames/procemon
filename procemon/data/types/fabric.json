@@ -1,5 +1,6 @@
 {
   "imagenet": "fabric",
+  "monster_type": "fabric",
   "nouns": [
     "osnaburg",
     "rinzu",
@@ -215,6 +216,5 @@
     "wool",
     "spandex"
   ],
-  "type": "fabric",
   "wikipedia": "fabric"
 }

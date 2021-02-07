@@ -1,5 +1,6 @@
 {
   "imagenet": "balsam",
+  "monster_type": "balsam",
   "nouns": [
     "balsam",
     "gymnosperm",
@@ -182,6 +183,5 @@
     "madder",
     "munjeet"
   ],
-  "type": "balsam",
   "wikipedia": "balsam"
 }

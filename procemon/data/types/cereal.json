@@ -1,5 +1,6 @@
 {
   "imagenet": "cereal",
+  "monster_type": "cereal",
   "nouns": [
     "rice",
     "ricegrass",
@@ -37,6 +38,5 @@
     "popcorn",
     "corn"
   ],
-  "type": "cereal",
   "wikipedia": "cereal"
 }

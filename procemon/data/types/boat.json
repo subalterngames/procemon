@@ -1,5 +1,6 @@
 {
   "imagenet": "boat",
+  "monster_type": "boat",
   "nouns": [
     "reed",
     "dory",
@@ -182,6 +183,5 @@
     "naval",
     "dugout"
   ],
-  "type": "boat",
   "wikipedia": "boat_types"
 }

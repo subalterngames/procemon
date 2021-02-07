@@ -1,5 +1,6 @@
 {
   "imagenet": "emblem",
+  "monster_type": "emblem",
   "nouns": [
     "colors",
     "colours",
@@ -43,6 +44,5 @@
     "device",
     "union"
   ],
-  "type": "emblem",
   "wikipedia": "emblem"
 }

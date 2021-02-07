@@ -1,5 +1,6 @@
 {
   "imagenet": "dessert",
+  "monster_type": "dessert",
   "nouns": [
     "sweet",
     "afters",
@@ -33,6 +34,5 @@
     "pavlova",
     "trifle"
   ],
-  "type": "dessert",
   "wikipedia": "dessert"
 }

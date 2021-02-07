@@ -1,5 +1,6 @@
 {
   "imagenet": "dog",
+  "monster_type": "dog",
   "nouns": [
     "niederlaufhund",
     "vallhund",
@@ -217,6 +218,5 @@
     "basenji",
     "whippet"
   ],
-  "type": "dog",
   "wikipedia": "dog"
 }

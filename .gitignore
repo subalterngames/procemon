@@ -1,3 +1,5 @@
 scratch.py
 .idea/
 procemon.egg-info/
+dst/
+procemon/__pycache__/

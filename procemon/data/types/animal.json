@@ -1,5 +1,6 @@
 {
   "imagenet": "animal",
+  "monster_type": "animal",
   "nouns": [
     "aardvark",
     "alligator",
@@ -136,6 +137,5 @@
     "yak",
     "zebra"
   ],
-  "type": "animal",
   "wikipedia": "animal"
 }

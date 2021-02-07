@@ -1,5 +1,6 @@
 {
   "imagenet": "fiber",
+  "monster_type": "fiber",
   "nouns": [
     "grimsby",
     "carding",
@@ -36,6 +37,5 @@
     "zari",
     "natural"
   ],
-  "type": "fiber",
   "wikipedia": "fiber"
 }

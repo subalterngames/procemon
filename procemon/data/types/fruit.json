@@ -1,5 +1,6 @@
 {
   "imagenet": "fruit",
+  "monster_type": "fruit",
   "nouns": [
     "bell",
     "salal",
@@ -86,6 +87,5 @@
     "blood",
     "tomato"
   ],
-  "type": "fruit",
   "wikipedia": "fruit"
 }

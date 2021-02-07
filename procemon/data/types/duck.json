@@ -1,5 +1,6 @@
 {
   "imagenet": "duck",
+  "monster_type": "duck",
   "nouns": [
     "drake",
     "dabbler",
@@ -33,6 +34,5 @@
     "sawbill",
     "sheldrake"
   ],
-  "type": "duck",
   "wikipedia": "duck"
 }

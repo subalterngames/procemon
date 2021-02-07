@@ -1,5 +1,6 @@
 {
   "imagenet": "carton",
+  "monster_type": "carton",
   "nouns": [
     "sixpack",
     "chest",
@@ -31,6 +32,5 @@
     "pyxis",
     "paintbox"
   ],
-  "type": "carton",
   "wikipedia": "carton"
 }

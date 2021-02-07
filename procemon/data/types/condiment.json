@@ -1,5 +1,6 @@
 {
   "imagenet": "condiment",
+  "monster_type": "condiment",
   "nouns": [
     "honey",
     "relish",
@@ -109,6 +110,5 @@
     "biber",
     "popcorn"
   ],
-  "type": "condiment",
   "wikipedia": "condiment"
 }

@@ -1,5 +1,6 @@
 {
   "imagenet": "fish",
+  "monster_type": "fish",
   "nouns": [
     "mullet",
     "goatfish",
@@ -274,6 +275,5 @@
     "garpike",
     "billfish"
   ],
-  "type": "fish",
   "wikipedia": "fish"
 }

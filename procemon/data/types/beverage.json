@@ -1,5 +1,6 @@
 {
   "imagenet": "beverage",
+  "monster_type": "beverage",
   "nouns": [
     "drink",
     "drinkable",
@@ -171,6 +172,5 @@
     "buttermilk",
     "fizz"
   ],
-  "type": "beverage",
   "wikipedia": "beverage"
 }

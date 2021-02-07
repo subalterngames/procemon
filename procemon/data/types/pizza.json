@@ -1,5 +1,6 @@
 {
   "imagenet": "pizza",
+  "monster_type": "pizza",
   "nouns": [
     "chicken",
     "pepperoni",
@@ -29,6 +30,5 @@
     "spinach",
     "tomato"
   ],
-  "type": "pizza",
   "wikipedia": "pizza"
 }

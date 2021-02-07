@@ -9,7 +9,7 @@ readme = readme.replace('"https://raw.githubusercontent.com/alters-mit/magnebot/
 
 setup(
     name='procemon',
-    version="0.0.1",
+    version="0.1.0",
     description='Procedurally generated monsters',
     long_description="Procedurally generated monsters",
     long_description_content_type='text/markdown',
@@ -28,5 +28,6 @@ setup(
     ],
     keywords='image pokemon card procgen',
     packages=find_packages(),
-    install_requires=["requests", "markovify", "beautifulsoup4", "gensim"],
+    install_requires=["requests", "markovify", "beautifulsoup4", "gensim", "numpy", "pillow",
+                      "perlin-numpy @ git+https://github.com/pvigier/perlin-numpy"],
 )

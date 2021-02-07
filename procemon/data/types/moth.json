@@ -1,5 +1,6 @@
 {
   "imagenet": "moth",
+  "monster_type": "moth",
   "nouns": [
     "miller",
     "tortricid",
@@ -33,6 +34,5 @@
     "egger",
     "lappet"
   ],
-  "type": "moth",
   "wikipedia": "moth"
 }

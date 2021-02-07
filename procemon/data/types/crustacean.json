@@ -1,5 +1,6 @@
 {
   "imagenet": "crustacean",
+  "monster_type": "crustacean",
   "nouns": [
     "krill",
     "isopod",
@@ -32,6 +33,5 @@
     "cirriped",
     "cirripede"
   ],
-  "type": "crustacean",
   "wikipedia": "crustacean"
 }

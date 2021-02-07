@@ -1,5 +1,6 @@
 {
   "imagenet": "furniture",
+  "monster_type": "furniture",
   "nouns": [
     "altar",
     "armchair",
@@ -221,6 +222,5 @@
     "writing",
     "yacht"
   ],
-  "type": "furniture",
   "wikipedia": "furniture"
 }

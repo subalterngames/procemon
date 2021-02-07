@@ -1,5 +1,6 @@
 {
   "imagenet": "metal",
+  "monster_type": "metal",
   "nouns": [
     "steel",
     "aluminium",
@@ -19,6 +20,5 @@
     "nickel",
     "bronze"
   ],
-  "type": "metal",
   "wikipedia": "metal"
 }

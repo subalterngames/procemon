@@ -1,5 +1,6 @@
 {
   "imagenet": "rodent",
+  "monster_type": "rodent",
   "nouns": [
     "gnawer",
     "chinchilla",
@@ -54,6 +55,5 @@
     "vole",
     "phenacomys"
   ],
-  "type": "rodent",
   "wikipedia": "rodent"
 }

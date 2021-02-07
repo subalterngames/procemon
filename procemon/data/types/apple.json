@@ -1,5 +1,6 @@
 {
   "imagenet": "apple",
+  "monster_type": "apple",
   "nouns": [
     "ortley",
     "macoun",
@@ -838,6 +839,5 @@
     "catline",
     "purpose"
   ],
-  "type": "apple",
   "wikipedia": "apple"
 }

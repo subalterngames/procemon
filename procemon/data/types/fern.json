@@ -1,5 +1,6 @@
 {
   "imagenet": "fern",
+  "monster_type": "fern",
   "nouns": [
     "fern",
     "pecopteris",
@@ -1826,6 +1827,5 @@
     "psilophyte",
     "psilophyton"
   ],
-  "type": "fern",
   "wikipedia": "fern"
 }
