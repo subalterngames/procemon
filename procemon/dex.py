@@ -48,7 +48,7 @@ class Dex:
     """:class_var
     A numpy array of a color palette.
     """
-    PALETTE = np.load(str(IMAGES_DIRECTORY.joinpath("palette.npy").resolve()))
+    PALETTE: np.array = np.load(str(IMAGES_DIRECTORY.joinpath("palette.npy").resolve()))
     """:class_var
     The portion of the palette where there are light colors.
     """

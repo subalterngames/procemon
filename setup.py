@@ -9,11 +9,11 @@ readme = readme.replace('"https://raw.githubusercontent.com/alters-mit/magnebot/
 
 setup(
     name='procemon',
-    version="0.1.0",
-    description='Procedurally generated monsters',
-    long_description="Procedurally generated monsters",
+    version="0.2.0",
+    description='Procedurally generated trading card game',
+    long_description="Procedurally generated trading card game",
     long_description_content_type='text/markdown',
-    url='???',
+    url='https://github.com/subalterngames/procemon',
     author='Seth Alter',
     author_email="subalterngames@gmail.com",
     license='MIT',

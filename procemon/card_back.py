@@ -7,8 +7,16 @@ from procemon.paths import IMAGES_DIRECTORY, FONTS_DIRECTORY
 
 
 class CardBack:
+    """
+    Create an image of the back of a card.
+    """
+
     @staticmethod
     def get() -> PngImageFile:
+        """
+        :return: An image of a card back.
+        """
+
         # Load the card template.
         card = Image.open(str(IMAGES_DIRECTORY.joinpath("card_back.png").resolve()))
 
