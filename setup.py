@@ -28,6 +28,6 @@ setup(
     ],
     keywords='image pokemon card procgen',
     packages=find_packages(),
-    install_requires=["requests", "markovify", "beautifulsoup4", "gensim", "numpy", "pillow",
+    install_requires=["requests", "markovify", "beautifulsoup4", "gensim", "numpy", "pillow", "fpdf",
                       "perlin-numpy @ git+https://github.com/pvigier/perlin-numpy"],
 )
