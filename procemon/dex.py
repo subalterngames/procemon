@@ -10,13 +10,13 @@ from requests import get
 from requests.exceptions import ConnectionError, MissingSchema, TooManyRedirects, ChunkedEncodingError
 from PIL import Image, ImageFont, ImageDraw, UnidentifiedImageError, ImageOps
 from PIL.PngImagePlugin import PngImageFile
+from gensim.models import KeyedVectors
+from perlin_numpy.perlin2d import generate_fractal_noise_2d
 from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, WORD_VEC_PATH, MOVES_DIRECTORY
 from procemon.monster_type import MonsterType
 from procemon.monster import Monster
 from procemon.rarity import Rarity
 from procemon.dex_encoder import DexEncoder
-from perlin_numpy.perlin2d import generate_fractal_noise_2d
-from gensim.models import KeyedVectors
 
 
 class Dex:
