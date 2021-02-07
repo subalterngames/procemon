@@ -5,6 +5,7 @@ from pathlib import Path
 from secrets import token_urlsafe
 from typing import List, Dict
 import textwrap
+from zipfile import ZipFile
 import numpy as np
 from requests import get
 from requests.exceptions import ConnectionError, MissingSchema, TooManyRedirects, ChunkedEncodingError
@@ -12,7 +13,7 @@ from PIL import Image, ImageFont, ImageDraw, UnidentifiedImageError, ImageOps
 from PIL.PngImagePlugin import PngImageFile
 from gensim.models import KeyedVectors
 from perlin_numpy.perlin2d import generate_fractal_noise_2d
-from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, WORD_VEC_PATH, MOVES_DIRECTORY
+from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, WORD_VEC_DIRECTORY, MOVES_DIRECTORY
 from procemon.monster_type import MonsterType
 from procemon.monster import Monster
 from procemon.rarity import Rarity
@@ -88,9 +89,29 @@ class Dex:
         for t in all_types:
             self.types[t.monster_type] = t
 
+        if not WORD_VEC_DIRECTORY.exists():
+            WORD_VEC_DIRECTORY.mkdir(parents=True)
+        word_vec_path = WORD_VEC_DIRECTORY.joinpath("glove.txt")
+        # Get the word vector file.
+        if not word_vec_path.exists():
+            if not quiet:
+                print("No word vector model file found. Downloading one now...")
+            resp = get("https://github.com/subalterngames/procemon/releases/download/wv/glove.zip")
+            assert resp.status_code == 200, f"Tried to download word vector model but got error code {resp.status_code}"
+            zip_path = WORD_VEC_DIRECTORY.joinpath("glove.zip")
+            zip_path.write_bytes(resp.content)
+            if not quiet:
+                print("...Done!")
+            with ZipFile(str(zip_path.resolve()), 'r') as zip_ref:
+                zip_ref.extractall(str(WORD_VEC_DIRECTORY.resolve()))
+            if not quiet:
+                print("Unzipped.")
+            zip_path.unlink()
+            if not quiet:
+                print("Deleted the zip file.")
         if not quiet:
             print("Loading word vector model (be patient!)...")
-        wv: KeyedVectors = KeyedVectors.load_word2vec_format(str(WORD_VEC_PATH.resolve()), binary=False)
+        wv: KeyedVectors = KeyedVectors.load_word2vec_format(str(word_vec_path.resolve()), binary=False)
         if not quiet:
             print("...Done!")
         # Get all possible verbs.
@@ -250,8 +271,12 @@ class Dex:
         # Get image URLs for the monster's primary type.
         if monster_type not in self.images_per_type:
             self.images_per_type[monster_type] = self.get_images(monster_type=monster_type)
-        # Pop the next image (to avoid duplicates).
-        return self.images_per_type[monster_type].pop(0)
+        # Return the last image in the list. There might be duplicates.
+        if len(self.images_per_type[monster_type]) == 1:
+            return self.images_per_type[monster_type][0]
+        # Pop the next image to avoid duplicates.
+        else:
+            return self.images_per_type[monster_type].pop(0)
 
     def get_images(self, monster_type: str) -> List[PngImageFile]:
         """

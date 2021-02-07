@@ -1,6 +1,7 @@
 <p align="center">
-<img src="https://github.com/subalterngames/procemon/blob/main/procemon/data/images/logo.png" />
+<img src="https://github.com/subalterngames/procemon/raw/main/procemon/data/images/logo.png" />
 </p>
+
 
 ***
 
@@ -12,20 +13,15 @@
 <img src="https://github.com/subalterngames/procemon/raw/main/doc/images/cards.png" />
 </p>
 
-# Requirements
-
-- Python 3.6 or later
-
 # Installation
 
-1. `git clone https://github.com/subalterngames/procemon.git`
-2. `cd path/to/procemon` (replace `path/to` with the actual path to this repo)
-3. `pip3 install -e .`
+**`pip3 install procemon`**
 
 # Usage
 
-1. `cd path/to/procemon` (replace `path/to` with the actual path to this repo)
-2. Windows: `py -3 create_dex.py` OS X and Linux: `python3 create_dex.py`
+1. Either [clone this repo](https://github.com/subalterngames/procemon) or [download this file](https://raw.githubusercontent.com/subalterngames/procemon/main/create_dex.py).
+2. `cd path/to/the/file` (Replace `path/to` with the actual path to the repo or the directory where the downloaded file is located.)
+3. Windows: `py -3 create_dex.py` OS X and Linux: `python3 create_dex.py`
 
 # What it does
 
@@ -52,6 +48,7 @@
 - Each monster has a `strong_against` which is just the type one to the right of its "primary type" in the Dex array of MonsterTypes. For example if the array is `["duck", "furniture", "fern"]` then all Monsters with the primary type `"duck"` are strong against `"furniture"`. (The order of this array is randomly shuffled whenever a new Dex is created.)
 - Each Monster has 2 [Moves](https://github.com/subalterngames/procemon/blob/main/doc/api/move.md). Moves are generated using the Monster's first type (the "primary type").
   - When the Dex is first created, it loads a [Word Vector file](https://radimrehurek.com/gensim/models/keyedvectors.html). It then loads [a list of verbs and a list of adjectives](https://github.com/subalterngames/procemon/tree/main/procemon/data/moves). These lists were scraped from pycorpora and [Bulbapedia](https://bulbapedia.bulbagarden.net/wiki/List_of_moves). Then, the Dex assigns verbs and adjectives to each Move based on their distance to the type. For example, if the type is `flower` and the adjective is `floral`, the distance will be really short, so now the adjectives dictionary will look something like: `{"flower": ["floral"]}`
+  - If you don't already have the expected word vector file, it is downloaded from [here](https://github.com/subalterngames/procemon/releases/download/wv/glove.zip) and extracted to `~/procemon_wv/` where`~` is your home directory.
   - There is also a list of "generic" verbs that any type can use. These verbs are a very short distance away from the word `"attack"`.
   - To get the `name` of a Move, a verb is first picked at random either from the "generic" verb list of the type-specific verb list. Then, sometimes a type-specific adjective is prepended to the `name`.
   - A `Move` has a certain `cost`. It might deal `damage` and it might have a `special` effect. The odds for how this is generated depends on the Monster's `rarity`.
