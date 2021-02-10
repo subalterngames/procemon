@@ -68,3 +68,8 @@
   - Randomly select some cards and add them as pages.
   - Write the PDF to disk.
 
+# Changelog
+
+## 1.0.1
+
+- Fixed: Data files aren't included.
