@@ -150,3 +150,33 @@ Source: https://stackoverflow.com/questions/28015400/how-to-fade-color
 
 _Returns:_  The lightened color as a tuple.
 
+#### get_image_from_url
+
+**`Dex.get_image_from_url(url)`**
+
+_This is a static function._
+
+Get an image from a URL. The URL might be bad so this function will test it to make sure it's a valid image.
+
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| url |  str |  | The image URL. |
+
+_Returns:_  If this is a valid image URL, the image. Otherwise, this returns None.
+
+#### get_wnid_urls
+
+**`Dex.get_wnid_urls(wnid)`**
+
+_This is a static function._
+
+Try to get image URLs from a wnid.
+
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| wnid |  str |  | The wnid. |
+
+_Returns:_  A list of image URLs in the wnid. Can be empty.
+

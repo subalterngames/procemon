@@ -74,6 +74,15 @@
 
 # Changelog
 
+## 1.1.0
+
+- Added a text file to the module to remember bad Wikipedia URLs so we don't test them again.
+- Added monster types: Antelope, Antenna, Candy, Mollusk, Needlework, Sailor, Singer, Sphere, Tool, Tree.
+- Fixed: Monster names sometimes end with `'S`.
+- Fixed: Getting Wikipedia pages for flavor text and images for sprites is slow and your router might complain. Now, the HEAD headers are tested before the GET headers, which is a lot faster. 
+- Fixed: Sometimes, images are marked as "bad" when they're actually valid.
+- Backend: Moved image URL testing in `Dex` to `get_image_from_url()` so that this function can be tested externally.
+
 ## 1.0.2
 
 - Minor update to README.

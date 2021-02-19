@@ -11,6 +11,8 @@ A monster has a name, two types, two moves, and some flavor text.
 | Variable | Type | Description |
 | --- | --- | --- |
 | `WIKIPEDIA` | Dict[str, str] | Wikipedia text per monster type or noun. Key = The type or noun. Value = Wikipedia text. |
+| `BAD_WIKIPEDIA_URLS_PATH ` |  | The path to the list of bad Wikipedia URLs. |
+| `BAD_WIKIPEDIA_URLS` | List[str] | A list of known bad Wikipedia URLs. |
 
 ***
 
@@ -61,4 +63,16 @@ Given the name of the page, get text from Wikipedia.
 | page |  str |  | A word in a category that might be a Wikipedia page. |
 
 _Returns:_  All of the paragraph text from a Wikipedia page if it exists. Otherwise, an empty string.
+
+#### add_to_bad_urls
+
+**`Monster.add_to_bad_urls(url)`**
+
+_This is a static function._
+
+Remember that this a bad Wikipedia URL.
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| url |  str |  | The bad Wikipedia URL. |
 

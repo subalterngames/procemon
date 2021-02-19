@@ -5,7 +5,7 @@ readme = Path('README.md').read_text(encoding='utf-8')
 
 setup(
     name='procemon',
-    version="1.0.2",
+    version="1.1.0",
     description='Procedurally generated trading card game',
     long_description=readme,
     long_description_content_type='text/markdown',
@@ -14,7 +14,7 @@ setup(
     author_email="subalterngames@gmail.com",
     license='MIT',
     classifiers=[
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
         'Topic :: Software Development',
         'License :: OSI Approved :: MIT License',

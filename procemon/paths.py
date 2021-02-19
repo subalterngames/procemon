@@ -11,5 +11,7 @@ MOVES_DIRECTORY = DATA_DIRECTORY.joinpath("moves")
 IMAGES_DIRECTORY = DATA_DIRECTORY.joinpath("images")
 # The path to the font files.
 FONTS_DIRECTORY = DATA_DIRECTORY.joinpath("fonts")
+# The path to the flavor text files.
+FLAVOR_TEXT_DIRECTORY = DATA_DIRECTORY.joinpath("flavor_text")
 # The directory of the word vector file.
 WORD_VEC_DIRECTORY = Path.home().joinpath("procemon_wv")

@@ -6,3 +6,4 @@ procemon/__pycache__/
 .pypirc
 pypi.py
 dist/
+imagenet/

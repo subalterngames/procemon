@@ -1,12 +1,15 @@
+import io
 import re
 from random import choice, randint, shuffle
 from typing import Tuple, List, Dict
-from requests import get
+from requests import get, head
+from requests.exceptions import ConnectionError, ReadTimeout
 from bs4 import BeautifulSoup
 import markovify
 from procemon.monster_type import MonsterType
 from procemon.move import Move
 from procemon.rarity import Rarity
+from procemon.paths import FLAVOR_TEXT_DIRECTORY
 
 
 class Monster:
@@ -18,6 +21,14 @@ class Monster:
     Wikipedia text per monster type or noun. Key = The type or noun. Value = Wikipedia text.
     """
     WIKIPEDIA: Dict[str, str] = dict()
+    """:class_var
+    The path to the list of bad Wikipedia URLs.
+    """
+    BAD_WIKIPEDIA_URLS_PATH = FLAVOR_TEXT_DIRECTORY.joinpath("bad_wikipedia_urls.txt")
+    """:class_var
+    A list of known bad Wikipedia URLs.
+    """
+    BAD_WIKIPEDIA_URLS: List[str] = BAD_WIKIPEDIA_URLS_PATH.read_text(encoding="utf-8").split("\n")
 
     def __init__(self, primary_type: MonsterType, all_types: List[MonsterType], generic_verbs: List[str],
                  type_verbs: Dict[str, List[str]], type_adjectives: Dict[str, List[str]], rarity: Rarity):
@@ -90,7 +101,7 @@ class Monster:
         if needs_vowel:
             self.name = choice(vowels[:-1]) + self.name
         # Capitalize the name.
-        self.name = self.name.lower().title()
+        self.name = self.name.lower().replace("'s", "").title()
 
         # Get a list of potential wiki words.
         wikipedia_pages: List[str] = words[:]
@@ -156,8 +167,25 @@ class Monster:
         if page in Monster.WIKIPEDIA:
             return Monster.WIKIPEDIA[page]
         url = f"https://en.wikipedia.org/wiki/{page}"
+        # If this is a known bad page, ignore it.
+        if url in Monster.BAD_WIKIPEDIA_URLS:
+            return ""
+        # Test the HEAD header to see if the page exists.
+        try:
+            resp = head(url, timeout=10)
+            if resp.status_code != 200 and resp.status_code != 301:
+                Monster.add_to_bad_urls(url)
+                return ""
+        except ConnectionError:
+            Monster.add_to_bad_urls(url)
+            return ""
+        except ReadTimeout:
+            Monster.add_to_bad_urls(url)
+            return ""
+
         resp = get(url)
-        if resp.status_code != 200:
+        if resp.status_code != 200 and resp.status_code != 301:
+            Monster.add_to_bad_urls(url)
             return ""
         # Scrape all of the paragraphs.
         soup = BeautifulSoup(resp.content, 'html.parser')
@@ -172,3 +200,15 @@ class Monster:
         # Cache the page.
         Monster.WIKIPEDIA[page] = wiki
         return wiki
+
+    @staticmethod
+    def add_to_bad_urls(url: str) -> None:
+        """
+        Remember that this a bad Wikipedia URL.
+
+        :param url: The bad Wikipedia URL.
+        """
+
+        Monster.BAD_WIKIPEDIA_URLS.append(url)
+        with io.open(str(Monster.BAD_WIKIPEDIA_URLS_PATH.resolve()), "at", encoding="utf-8") as f:
+            f.write(url + "\n")

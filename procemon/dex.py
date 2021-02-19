@@ -3,12 +3,13 @@ from random import shuffle
 from json import loads, dumps
 from pathlib import Path
 from secrets import token_urlsafe
-from typing import List, Dict
+from typing import List, Dict, Optional
+import re
 import textwrap
 from zipfile import ZipFile
 import numpy as np
-from requests import get
-from requests.exceptions import ConnectionError, MissingSchema, TooManyRedirects, ChunkedEncodingError
+from requests import get, head
+from requests.exceptions import ConnectionError, MissingSchema, TooManyRedirects, ChunkedEncodingError, ReadTimeout
 from PIL import Image, ImageFont, ImageDraw, UnidentifiedImageError, ImageOps
 from PIL.PngImagePlugin import PngImageFile
 from gensim.models import KeyedVectors
@@ -301,75 +302,35 @@ class Dex:
         wnid_index = 0
         while wnid_index < len(wnids) and len(images) < self.__num_monsters_per_type:
             wnid = wnids[wnid_index]
-            if wnid.startswith("-"):
-                wnid = wnid[1:]
-            if wnid in Dex.BAD_WNIDS:
+            # Get URLs from the wnid.
+            urls = Dex.get_wnid_urls(wnid=wnid)
+            if len(urls) == 0:
                 wnid_index += 1
+                if wnid not in Dex.BAD_WNIDS:
+                    Dex.add_to_bad_urls(wnid)
                 continue
-            got_resp = False
-            resp = None
-            num_attempts = 0
-            while not got_resp and num_attempts < 10:
-                # Try to get the data. We know all of these URLs are valid.
-                try:
-                    resp = get(f"http://www.image-net.org/api/text/imagenet.synset.geturls.getmapping?wnid={wnid}")
-                    got_resp = True
-                except ConnectionError:
-                    num_attempts += 1
-                    continue
-            # If this wnid is totally bogus, remember not to try it again.
-            if not got_resp or "Invalid" in resp.content.decode("utf-8"):
-                Dex.add_to_bad_wnids(wnid)
-                wnid_index += 1
-                continue
-            # Get all of the image URLs.
-            urls = resp.content.decode("utf-8").split("\r\n")
-            urls = [url.split(" ")[1].strip() for url in urls if len(url.strip()) > 0 and
-                    url.split(" ")[1].strip() not in Dex.BAD_IMAGE_URLS]
-            # Sometimes there's just whole wnids of bad URLs. We don't need to test them all. We've got places to be!
-            shuffle(urls)
+            # We'll only test these and move on if they're no good.
             urls = urls[:20]
-
             # Test each URL.
             for url in urls:
-                # Try to get the image.
-                try:
-                    image_resp = get(url)
-                except ConnectionError:
+                img = Dex.get_image_from_url(url=url)
+                # Remember that this is a bad image so we never try it again.
+                if img is None:
                     Dex.add_to_bad_urls(url)
                     continue
-                except MissingSchema:
-                    Dex.add_to_bad_urls(url)
-                    continue
-                except TooManyRedirects:
-                    Dex.add_to_bad_urls(url)
-                    continue
-                except ChunkedEncodingError:
-                    Dex.add_to_bad_urls(url)
-                    continue
-                # Try to load the image.
-                try:
-                    img = Image.open(io.BytesIO(image_resp.content))
-
-                    # Convert to grayscale.
-                    img = ImageOps.grayscale(img)
-                    # Increase the contrast.
-                    img = ImageOps.autocontrast(img)
-                    # Resize.
-                    img = img.resize((32, 32), Image.LANCZOS)
-                    # Colorize using the palette color for this type.
-                    img = ImageOps.colorize(img, black="black",
-                                            white=Dex.LIGHT_COLORS[self.color_indices[monster_type]])
-                    # Enlarge.
-                    img = img.resize((400, 400), Image.NEAREST)
-                    # Append the image.
-                    images.append(img)
-                except UnidentifiedImageError:
-                    Dex.add_to_bad_urls(url)
-                    continue
-            # If there are no URLs, this is a bad wnid.
-            if len(urls) == 0:
-                Dex.add_to_bad_wnids(wnid)
+                # Convert to grayscale.
+                img = ImageOps.grayscale(img)
+                # Increase the contrast.
+                img = ImageOps.autocontrast(img)
+                # Resize.
+                img = img.resize((32, 32), Image.LANCZOS)
+                # Colorize using the palette color for this type.
+                img = ImageOps.colorize(img, black="black",
+                                        white=Dex.LIGHT_COLORS[self.color_indices[monster_type]])
+                # Enlarge.
+                img = img.resize((400, 400), Image.NEAREST)
+                # Append the image.
+                images.append(img)
             wnid_index += 1
         shuffle(images)
         return images
@@ -655,3 +616,96 @@ class Dex:
         vector = white - color
         arr = color + vector * percent
         return tuple([int(a) for a in arr])
+
+    @staticmethod
+    def get_image_from_url(url: str) -> Optional[PngImageFile]:
+        """
+        Get an image from a URL. The URL might be bad so this function will test it to make sure it's a valid image.
+
+        :param url: The image URL.
+
+        :return: If this is a valid image URL, the image. Otherwise, this returns None.
+        """
+
+        # Fix Wikimedia links.
+        url = url.replace("http://upload.wikimedia.org/", "https://upload.wikimedia.org/")
+        # Get the headers to quickly determine if this is an ok URL.
+        try:
+            # Set a short timeout because if it takes too long, we don't want the image anyway.
+            image_header_resp = head(url, timeout=2)
+            # Ignore if this is a text website.
+            # Flickr's HEAD headers don't match its GET headers so we'll have to test them again.
+            flickr = re.search(r"(.*)static\.flickr\.com", url)
+            if flickr is None and ("Content-Type" not in image_header_resp.headers or
+                                   "image" not in image_header_resp.headers["Content-Type"]):
+                return None
+        # If we can't connect, assume that the image doesn't exist.
+        except ConnectionError:
+            return None
+        # If it takes too long to get the image, assume that it doesn't exist.
+        except ReadTimeout:
+            return None
+
+        # Try to get the image.
+        try:
+            image_resp = get(url, timeout=10)
+            # Check the header to see if this is an image before trying to load it with PIL.
+            if "Content-Type" not in image_resp.headers or \
+                    "image" not in image_resp.headers["Content-Type"]:
+                return None
+            else:
+                # Try to load the image.
+                try:
+                    img = Image.open(io.BytesIO(image_resp.content))
+                    return img
+                except UnidentifiedImageError:
+                    return None
+        except ConnectionError:
+            return None
+        except MissingSchema:
+            return None
+        except TooManyRedirects:
+            return None
+        except ChunkedEncodingError:
+            return None
+        except ReadTimeout:
+            return None
+
+    @staticmethod
+    def get_wnid_urls(wnid: str) -> List[str]:
+        """
+        Try to get image URLs from a wnid.
+
+        :param wnid: The wnid.
+
+        :return: A list of image URLs in the wnid. Can be empty.
+        """
+        if wnid.startswith("-"):
+            wnid = wnid[1:]
+        if wnid in Dex.BAD_WNIDS:
+            return []
+        got_resp = False
+        resp = None
+        num_attempts = 0
+        while not got_resp and num_attempts < 10:
+            # Try to get the data. We know all of these URLs are valid.
+            try:
+                resp = get(f"http://www.image-net.org/api/text/imagenet.synset.geturls.getmapping?wnid={wnid}")
+                got_resp = True
+            except ConnectionError:
+                num_attempts += 1
+                continue
+        # If this wnid is totally bogus, remember not to try it again.
+        if not got_resp or "Invalid" in resp.content.decode("utf-8"):
+            Dex.add_to_bad_wnids(wnid)
+            return []
+        # Get all of the image URLs.
+        urls = resp.content.decode("utf-8").split("\r\n")
+        urls = [url.split(" ")[1].strip() for url in urls if len(url.strip()) > 0 and
+                url.split(" ")[1].strip() not in Dex.BAD_IMAGE_URLS]
+        # If there are no URLs, this is a bad wnid.
+        if len(urls) == 0:
+            Dex.add_to_bad_wnids(wnid)
+        # Sometimes there's just whole wnids of bad URLs. We don't need to test them all. We've got places to be!
+        shuffle(urls)
+        return urls
