@@ -154,7 +154,7 @@ class WV:
 if __name__ == "__main__":
     wv = WV()
     # Get attack verbs.
-    MOVES_DIRECTORY.joinpath("attack_verbs.txt").write_text("\n".join(wv.get_attack_verbs()), encoding="utf-8")
+    wv.get_attack_verbs(write=True)
     all_types: List[str] = list()
     # Get verbs and adjectives for each monster type.
     for f in TYPES_DIRECTORY.iterdir():
