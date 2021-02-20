@@ -77,6 +77,7 @@
 
 ## 1.2.0
 
+- Removed types: Antelope, Mollusk, Raptor
 - Added MANY more adjectives and verbs.
 - Move names tend to be much more closely associated with the primary monster type.
 - Added `wv.py`. This script will pre-cache all of the verbs and adjectives per monster type rather than generating them at runtime with a word vector model.

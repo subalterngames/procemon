@@ -168,16 +168,27 @@
     "transitional"
   ],
   "verbs": [
+    "abstract",
     "alien",
+    "antique",
+    "brooch",
+    "exhibit",
     "fragment",
     "item",
+    "jewel",
     "object",
+    "occult",
+    "ornament",
+    "sculpture",
+    "shipwreck",
     "stolen",
+    "subculture",
     "tattoo",
     "tomb",
     "tool",
     "trace",
-    "treasure"
+    "treasure",
+    "unearth"
   ],
   "wikipedia": "Artifact_(archaeology)"
 }

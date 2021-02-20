@@ -562,12 +562,18 @@
     "kiosk"
   ],
   "verbs": [
+    "applied",
     "course",
+    "culture",
     "define",
     "describe",
     "example",
     "experience",
     "learn",
+    "lesson",
+    "relate",
+    "school",
+    "study",
     "subject",
     "teach",
     "understand"

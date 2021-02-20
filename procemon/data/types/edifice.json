@@ -305,12 +305,21 @@
     "built",
     "bust",
     "church",
+    "concrete",
+    "dome",
+    "frame",
+    "moat",
+    "mound",
+    "pillar",
+    "roof",
     "ruin",
     "shrine",
     "stone",
     "structure",
+    "tomb",
     "tower",
-    "wooden"
+    "wooden",
+    "wrought"
   ],
   "wikipedia": "edifice"
 }

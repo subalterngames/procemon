@@ -66,11 +66,17 @@
     "bark",
     "beetle",
     "crab",
+    "cuckoo",
     "falcon",
+    "found",
+    "known",
     "louse",
+    "name",
+    "prey",
     "shark",
     "snail",
-    "tail"
+    "tail",
+    "type"
   ],
   "wikipedia": "moth"
 }

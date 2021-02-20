@@ -269,8 +269,6 @@ adiaphoristic
 adiaphorous
 adipose
 adjacent
-adjectival
-adjective
 adjoining
 adjudicative
 adjunct
@@ -328,7 +326,6 @@ adventive
 adventuresome
 adventuristic
 adventurous
-adverbial
 adversative
 adverse
 advertent

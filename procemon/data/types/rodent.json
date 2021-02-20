@@ -121,12 +121,23 @@
     "phenacomys"
   ],
   "verbs": [
+    "beetle",
     "bird",
     "bite",
     "bitten",
+    "breed",
+    "brood",
+    "fowl",
+    "herd",
+    "hive",
     "infect",
+    "kennel",
+    "kitten",
+    "louse",
     "prey",
     "shark",
+    "squid",
+    "stowaway",
     "tick",
     "worm"
   ],

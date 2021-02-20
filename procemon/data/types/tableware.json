@@ -94,6 +94,7 @@
   "verbs": [
     "antique",
     "apparel",
+    "bucket",
     "confection",
     "die-cast",
     "enamel",
@@ -102,6 +103,8 @@
     "laminate",
     "perfume",
     "shampoo",
+    "spoon",
+    "towel",
     "ware"
   ],
   "wikipedia": "tableware"

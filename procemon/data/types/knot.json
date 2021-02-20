@@ -214,13 +214,25 @@
     "ring"
   ],
   "verbs": [
+    "bead",
+    "circle",
+    "curve",
+    "dress",
     "hole",
+    "loop",
+    "maze",
     "mesh",
+    "pattern",
     "putt",
     "ring",
     "rope",
     "screw",
+    "sheaf",
+    "sheath",
+    "stitch",
+    "strung",
     "thread",
+    "weave",
     "wire"
   ],
   "wikipedia": "knot"

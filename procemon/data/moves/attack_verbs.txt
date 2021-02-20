@@ -396,9 +396,6 @@ wake
 want
 watch
 weekend
-well
-went
-while
 wish
 withdraw
 worst

@@ -359,9 +359,26 @@
     "pearl"
   ],
   "verbs": [
+    "armor",
+    "belt",
+    "black",
+    "company",
+    "cross",
     "diamond",
+    "hill",
+    "known",
     "lithograph",
-    "mezzotint"
+    "long",
+    "magic",
+    "mezzotint",
+    "mine",
+    "pair",
+    "part",
+    "piece",
+    "ring",
+    "rubber",
+    "shell",
+    "trade"
   ],
   "wikipedia": "gemstone"
 }

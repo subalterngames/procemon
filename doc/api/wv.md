@@ -7,6 +7,15 @@ These are stored in the .json monster type files.
 
 ***
 
+## Class Variables
+
+| Variable | Type | Description |
+| --- | --- | --- |
+| `MIN_WORDS` | int | The minimum number of words in a given part of speech. |
+| `TOPN` | int | When searching for words similar to a monster type, search for this many. |
+
+***
+
 ## Fields
 
 - `quiet` If True, suppress console output.

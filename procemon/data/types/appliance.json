@@ -156,13 +156,17 @@
     "cleaner"
   ],
   "verbs": [
+    "automobile",
     "chain",
     "chip",
     "company",
+    "console",
     "phone",
     "plug",
+    "retail",
     "shop",
     "snack",
+    "store",
     "warehouse",
     "wholesale"
   ],

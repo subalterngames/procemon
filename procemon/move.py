@@ -135,7 +135,7 @@ class Move:
             else:
                 self.special = conditional + effect[0].lower() + effect[1:]
         # Choose a type specific verb.
-        if self.damage == 0 or random() < 0.25:
+        if self.damage == 0 or random() < 0.5:
             verb = choice(type_verbs[monster_type])
         # Choose a generic attack verb.
         else:

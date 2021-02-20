@@ -319,14 +319,33 @@
     "yacht"
   ],
   "verbs": [
+    "built",
     "candy",
+    "display",
+    "empty",
+    "fancy",
+    "fine",
+    "floor",
+    "gift",
     "hand",
     "home",
     "house",
     "paper",
     "piece",
+    "print",
+    "rent",
+    "room",
     "rubber",
-    "sell"
+    "sell",
+    "shoe",
+    "shop",
+    "spare",
+    "steel",
+    "style",
+    "trash",
+    "warehouse",
+    "window",
+    "wooden"
   ],
   "wikipedia": "furniture"
 }

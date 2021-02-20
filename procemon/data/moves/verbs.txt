@@ -10650,15 +10650,12 @@ weight
 welch
 welcome
 weld
-well
 welsh
 welt
 welter
 wench
 wend
-went
 wept
-were
 wert
 wester
 westernise
@@ -10684,7 +10681,6 @@ whiff
 whiffet
 whiffle
 whig
-while
 whimper
 whine
 whinge

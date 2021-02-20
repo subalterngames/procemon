@@ -89,13 +89,26 @@
   ],
   "verbs": [
     "bean",
+    "berry",
+    "bloom",
+    "butter",
     "cake",
+    "cream",
     "erect",
     "flavor",
     "frost",
     "fruit",
+    "garden",
+    "ginger",
     "grass",
-    "plant"
+    "honey",
+    "leaf",
+    "mushroom",
+    "pepper",
+    "plant",
+    "rice",
+    "salt",
+    "stew"
   ],
   "wikipedia": "herb"
 }

@@ -119,13 +119,21 @@
     "megathrust"
   ],
   "verbs": [
+    "alarm",
     "alert",
+    "borne",
     "cause",
     "damage",
     "effect",
+    "fault",
+    "flood",
     "harm",
     "impact",
+    "peril",
+    "pose",
     "risk",
+    "smoke",
+    "spill",
     "threat"
   ],
   "wikipedia": "hazard"

@@ -50,12 +50,15 @@
     "boat",
     "captain",
     "crew",
+    "hulk",
+    "lance",
     "pilot",
     "ship",
     "skipper",
     "soldier",
     "star",
-    "woman"
+    "woman",
+    "yacht"
   ],
   "wikipedia": "Sailor"
 }
