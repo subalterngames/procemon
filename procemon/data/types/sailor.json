@@ -1,4 +1,16 @@
 {
+  "adjectives": [
+    "corporal",
+    "divers",
+    "man",
+    "missing",
+    "overboard",
+    "pilot",
+    "sailing",
+    "star",
+    "submarine",
+    "teenage"
+  ],
   "imagenet": "sailor",
   "monster_type": "sailor",
   "nouns": [
@@ -33,6 +45,17 @@
     "lascar",
     "bargeman",
     "whaler"
+  ],
+  "verbs": [
+    "boat",
+    "captain",
+    "crew",
+    "pilot",
+    "ship",
+    "skipper",
+    "soldier",
+    "star",
+    "woman"
   ],
   "wikipedia": "Sailor"
 }

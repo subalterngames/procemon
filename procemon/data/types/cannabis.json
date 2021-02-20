@@ -1,4 +1,30 @@
 {
+  "adjectives": [
+    "antibiotic",
+    "bananas",
+    "banned",
+    "contraband",
+    "counterfeit",
+    "crack",
+    "drinking",
+    "hallucinogenic",
+    "herbal",
+    "homeopathic",
+    "hydroponic",
+    "illegal",
+    "illicit",
+    "medicinal",
+    "narcotic",
+    "organic",
+    "poisonous",
+    "prescription",
+    "psychoactive",
+    "psychotropic",
+    "rum",
+    "smokeless",
+    "smoking",
+    "stimulant"
+  ],
   "imagenet": "cannabis",
   "monster_type": "cannabis",
   "nouns": [
@@ -410,6 +436,17 @@
     "fuzzy",
     "grapefruit",
     "mint"
+  ],
+  "verbs": [
+    "addict",
+    "booze",
+    "counterfeit",
+    "crack",
+    "dope",
+    "drink",
+    "drug",
+    "liquor",
+    "wine"
   ],
   "wikipedia": "cannabis"
 }

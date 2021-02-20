@@ -1,4 +1,32 @@
 {
+  "adjectives": [
+    "amphibian",
+    "amphipod",
+    "ant",
+    "beetle",
+    "bivalve",
+    "brachiopod",
+    "caecilian",
+    "carnivorous",
+    "cephalopod",
+    "cichlid",
+    "copepod",
+    "crustacean",
+    "cuckoo",
+    "cyprinid",
+    "diurnal",
+    "endemic",
+    "flowering",
+    "fungal",
+    "marsupial",
+    "noctuid",
+    "nymphalid",
+    "parasitic",
+    "reptile",
+    "tail",
+    "tunicate",
+    "winged"
+  ],
   "imagenet": "moth",
   "monster_type": "moth",
   "nouns": [
@@ -33,6 +61,16 @@
     "eggar",
     "egger",
     "lappet"
+  ],
+  "verbs": [
+    "bark",
+    "beetle",
+    "crab",
+    "falcon",
+    "louse",
+    "shark",
+    "snail",
+    "tail"
   ],
   "wikipedia": "moth"
 }

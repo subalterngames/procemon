@@ -1,4 +1,22 @@
 {
+  "adjectives": [
+    "agamid",
+    "amphipod",
+    "andesitic",
+    "bivalve",
+    "calcareous",
+    "cichlid",
+    "copepod",
+    "crustacean",
+    "epiphytic",
+    "gastropod",
+    "monocotyledonous",
+    "operculate",
+    "pulmonate",
+    "shell-less",
+    "terrestrial",
+    "tunicate"
+  ],
   "imagenet": "mollusk",
   "monster_type": "mollusk",
   "nouns": [
@@ -60,6 +78,10 @@
     "mollusc",
     "cowrie",
     "spirula"
+  ],
+  "verbs": [
+    "snail",
+    "spindle"
   ],
   "wikipedia": "Mollusca"
 }

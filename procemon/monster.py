@@ -30,14 +30,14 @@ class Monster:
     """
     BAD_WIKIPEDIA_URLS: List[str] = BAD_WIKIPEDIA_URLS_PATH.read_text(encoding="utf-8").split("\n")
 
-    def __init__(self, primary_type: MonsterType, all_types: List[MonsterType], generic_verbs: List[str],
+    def __init__(self, primary_type: MonsterType, all_types: List[MonsterType], attack_verbs: List[str],
                  type_verbs: Dict[str, List[str]], type_adjectives: Dict[str, List[str]], rarity: Rarity):
         """
         :param all_types: All possible monster types in the dex.
         :param primary_type: The primary type of the monster. The monster will have a second type, chosen randomly.
         :param type_adjectives: Adjectives per monster type.
         :param type_verbs: Verbs per monster type.
-        :param generic_verbs: Type-agnostic verbs.
+        :param attack_verbs: Type-agnostic verbs.
         :param rarity: The rarity of this monster. Determines its overall strength and coolness.
         """
 
@@ -141,7 +141,7 @@ class Monster:
         self.moves: List[Move] = list()
         for i in range(2):
             self.moves.append(Move(monster_type=self.types[0], rarity=rarity, type_adjectives=type_adjectives,
-                                   type_verbs=type_verbs, generic_verbs=generic_verbs))
+                                   type_verbs=type_verbs, attack_verbs=attack_verbs))
 
         if rarity == Rarity.common:
             """:field

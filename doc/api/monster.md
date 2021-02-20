@@ -38,7 +38,7 @@ A monster has a name, two types, two moves, and some flavor text.
 
 #### \_\_init\_\_
 
-**`Monster(all_types, primary_type, type_adjectives, type_verbs, generic_verbs, rarity)`**
+**`Monster(all_types, primary_type, type_adjectives, type_verbs, attack_verbs, rarity)`**
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -46,7 +46,7 @@ A monster has a name, two types, two moves, and some flavor text.
 | primary_type |  MonsterType |  | The primary type of the monster. The monster will have a second type, chosen randomly. |
 | type_adjectives |  Dict[str, List[str] |  | Adjectives per monster type. |
 | type_verbs |  Dict[str, List[str] |  | Verbs per monster type. |
-| generic_verbs |  List[str] |  | Type-agnostic verbs. |
+| attack_verbs |  List[str] |  | Type-agnostic verbs. |
 | rarity |  Rarity |  | The rarity of this monster. Determines its overall strength and coolness. |
 
 #### get_wiki_text

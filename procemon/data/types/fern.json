@@ -1,4 +1,27 @@
 {
+  "adjectives": [
+    "ant",
+    "bamboo",
+    "beetle",
+    "birch",
+    "canary",
+    "chestnut",
+    "cichlid",
+    "coral",
+    "deciduous",
+    "endemic",
+    "evergreen",
+    "flowering",
+    "hazel",
+    "lilac",
+    "ornamental",
+    "oyster",
+    "primrose",
+    "rust",
+    "sorrel",
+    "spruce",
+    "wattle"
+  ],
   "imagenet": "fern",
   "monster_type": "fern",
   "nouns": [
@@ -1826,6 +1849,18 @@
     "starflower",
     "psilophyte",
     "psilophyton"
+  ],
+  "verbs": [
+    "bark",
+    "beetle",
+    "birch",
+    "feather",
+    "leaf",
+    "pine",
+    "raven",
+    "rust",
+    "spruce",
+    "tree"
   ],
   "wikipedia": "fern"
 }

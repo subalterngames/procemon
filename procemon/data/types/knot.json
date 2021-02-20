@@ -1,4 +1,13 @@
 {
+  "adjectives": [
+    "bamboo",
+    "dress",
+    "hexagonal",
+    "lateen",
+    "quadrilateral",
+    "strung",
+    "tabby"
+  ],
   "imagenet": "knot",
   "monster_type": "knot",
   "nouns": [
@@ -203,6 +212,16 @@
     "prusik",
     "knotless",
     "ring"
+  ],
+  "verbs": [
+    "hole",
+    "mesh",
+    "putt",
+    "ring",
+    "rope",
+    "screw",
+    "thread",
+    "wire"
   ],
   "wikipedia": "knot"
 }

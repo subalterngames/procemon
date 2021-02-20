@@ -1,4 +1,38 @@
 {
+  "adjectives": [
+    "accidental",
+    "adverse",
+    "alert",
+    "behavioral",
+    "catastrophic",
+    "choking",
+    "climatic",
+    "dangerous",
+    "ecological",
+    "environmental",
+    "flood",
+    "harmful",
+    "hazardous",
+    "lurking",
+    "minimal",
+    "navigational",
+    "obvious",
+    "occupational",
+    "posed",
+    "potential",
+    "problem",
+    "prone",
+    "resultant",
+    "resulting",
+    "ripple",
+    "seismic",
+    "serious",
+    "severe",
+    "toxic",
+    "unintended",
+    "warming",
+    "warning"
+  ],
   "imagenet": "hazard",
   "monster_type": "hazard",
   "nouns": [
@@ -83,6 +117,16 @@
     "flooding",
     "industrial",
     "megathrust"
+  ],
+  "verbs": [
+    "alert",
+    "cause",
+    "damage",
+    "effect",
+    "harm",
+    "impact",
+    "risk",
+    "threat"
   ],
   "wikipedia": "hazard"
 }

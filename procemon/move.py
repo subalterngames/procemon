@@ -15,14 +15,14 @@ class Move:
     """
     MOODS: List[str] = list()
 
-    def __init__(self, monster_type: str, rarity: Rarity, generic_verbs: List[str], type_verbs: Dict[str, List[str]],
+    def __init__(self, monster_type: str, rarity: Rarity, attack_verbs: List[str], type_verbs: Dict[str, List[str]],
                  type_adjectives: Dict[str, List[str]], force_damage: bool = False, force_no_special: bool = False):
         """
         :param monster_type: The type of move.
         :param rarity: The rarity of the monster this move belongs to. This is used to decide move's coolness.
         :param type_adjectives: Adjectives per monster type.
         :param type_verbs: Verbs per monster type.
-        :param generic_verbs: Type-agnostic verbs.
+        :param attack_verbs: Type-agnostic verbs that are nearby "attack verbs".
         :param force_damage: If True, this move will always deal damage. If False, it might deal damage.
         :param force_no_special: If True, this move will never have a special effect.
         """
@@ -45,21 +45,6 @@ class Move:
             adj = choice(type_adjectives[monster_type])
         else:
             adj = ""
-
-        # Choose a type specific verb.
-        if random() < 0.45:
-            verb = choice(type_verbs[monster_type])
-        # Choose a generic verb.
-        else:
-            verb = choice(generic_verbs)
-
-        if adj != "":
-            """:field 
-            The name of the move.
-            """
-            self.name = f"{adj} {verb}".title()
-        else:
-            self.name = verb.title()
 
         # Get the odds of dealing no damage.
         if force_damage:
@@ -115,7 +100,7 @@ class Move:
         if special:
             # Add a conditional.
             if random() < 0.4:
-                conditional: str = f"Roll a die. On a {randint(1, 5)} or above, "
+                conditional: str = f"Roll a die. On a {randint(2, 5)} or above, "
             else:
                 conditional: str = ""
 
@@ -149,3 +134,17 @@ class Move:
                 self.special = effect
             else:
                 self.special = conditional + effect[0].lower() + effect[1:]
+        # Choose a type specific verb.
+        if self.damage == 0 or random() < 0.25:
+            verb = choice(type_verbs[monster_type])
+        # Choose a generic attack verb.
+        else:
+            verb = choice(attack_verbs)
+
+        if adj != "":
+            """:field 
+            The name of the move.
+            """
+            self.name = f"{adj} {verb}".title()
+        else:
+            self.name = verb.title()

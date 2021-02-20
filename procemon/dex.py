@@ -6,15 +6,13 @@ from secrets import token_urlsafe
 from typing import List, Dict, Optional
 import re
 import textwrap
-from zipfile import ZipFile
 import numpy as np
 from requests import get, head
 from requests.exceptions import ConnectionError, MissingSchema, TooManyRedirects, ChunkedEncodingError, ReadTimeout
 from PIL import Image, ImageFont, ImageDraw, UnidentifiedImageError, ImageOps
 from PIL.PngImagePlugin import PngImageFile
-from gensim.models import KeyedVectors
 from perlin_numpy.perlin2d import generate_fractal_noise_2d
-from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, WORD_VEC_DIRECTORY, MOVES_DIRECTORY
+from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, MOVES_DIRECTORY
 from procemon.monster_type import MonsterType
 from procemon.monster import Monster
 from procemon.rarity import Rarity
@@ -90,82 +88,8 @@ class Dex:
         for t in all_types:
             self.types[t.monster_type] = t
 
-        if not WORD_VEC_DIRECTORY.exists():
-            WORD_VEC_DIRECTORY.mkdir(parents=True)
-        word_vec_path = WORD_VEC_DIRECTORY.joinpath("glove.txt")
-        # Get the word vector file.
-        if not word_vec_path.exists():
-            if not quiet:
-                print("No word vector model file found. Downloading one now...")
-            resp = get("https://github.com/subalterngames/procemon/releases/download/wv/glove.zip")
-            assert resp.status_code == 200, f"Tried to download word vector model but got error code {resp.status_code}"
-            zip_path = WORD_VEC_DIRECTORY.joinpath("glove.zip")
-            zip_path.write_bytes(resp.content)
-            if not quiet:
-                print("...Done!")
-            with ZipFile(str(zip_path.resolve()), 'r') as zip_ref:
-                zip_ref.extractall(str(WORD_VEC_DIRECTORY.resolve()))
-            if not quiet:
-                print("Unzipped.")
-            zip_path.unlink()
-            if not quiet:
-                print("Deleted the zip file.")
-        if not quiet:
-            print("Loading word vector model (be patient!)...")
-        wv: KeyedVectors = KeyedVectors.load_word2vec_format(str(word_vec_path.resolve()), binary=False)
-        if not quiet:
-            print("...Done!")
-        # Get all possible verbs.
-        verbs: List[str] = MOVES_DIRECTORY.joinpath("verbs.txt").read_text(encoding="utf-8").split("\n")
-        shuffle(verbs)
-        # A list of verbs that any move can use. This list is populated the first time it is used.
-        generic_verbs: List[str] = list()
-        # Populate a list of generic verbs.
-        for v in verbs:
-            # If the verb is nearby "attack" then it's a generic verb.
-            try:
-                d = wv.distance(v, "attack")
-            # This word isn't isn't in the word vector model. Ignore it.
-            except KeyError:
-                continue
-            if d < 0.6:
-                generic_verbs.append(v)
-        verbs = [v for v in verbs if v not in generic_verbs]
-
-        # All possible adjectives.
-        adjectives: List[str] = MOVES_DIRECTORY.joinpath("adjectives.txt").read_text(encoding="utf-8").split("\n")
-        shuffle(adjectives)
-        # Verbs per type.
-        type_verbs: Dict[str, List[str]] = dict()
-        # Adjectives per type.
-        type_adjectives: Dict[str, List[str]] = dict()
-        # Populate the list of verbs and adjectives.
-        for pos, lst in zip([type_verbs, type_adjectives], [verbs, adjectives]):
-            done = False
-            while not done:
-                done = True
-                for w in lst:
-                    min_distance = 2
-                    min_type = ""
-                    for t in self.types:
-                        if t not in pos:
-                            pos[t] = list()
-                        if len(pos[t]) >= 12:
-                            continue
-                        done = False
-                        try:
-                            distance = wv.distance(w, t)
-                        except KeyError:
-                            continue
-                        if distance < min_distance:
-                            min_distance = distance
-                            min_type = t
-                        # Always add the word if there's a very close association.
-                        if distance < 0.5:
-                            pos[t].append(w)
-                    # Add the minimum-distance word.
-                    if min_type != "" and w not in pos[min_type]:
-                        pos[min_type].append(w)
+        attack_verbs = MOVES_DIRECTORY.joinpath("attack_verbs.txt").read_text(encoding="utf-8").split("\n")
+        shuffle(attack_verbs)
 
         """:field
         The output directory of the dex.
@@ -183,6 +107,13 @@ class Dex:
 
         # The number of monsters per type. Used for images.
         self.__num_monsters_per_type: int = num_monsters_per_type
+
+        # Get and shuffle the type-specific verbs and adjectives.
+        type_adjectives: Dict[str, List[str]] = dict()
+        type_verbs: Dict[str, List[str]] = dict()
+        for t in self.types:
+            type_adjectives[t] = self.types[t].adjectives[:]
+            type_verbs[t] = self.types[t].verbs[:]
 
         # Get the number of monsters per rarity.
         num_rare_per_type = int(num_monsters_per_type * 0.2)
@@ -205,7 +136,7 @@ class Dex:
                 rarities.append(Rarity.common)
             for rarity in rarities:
                 m = Monster(primary_type=self.types[t], all_types=all_types, rarity=rarity,
-                            generic_verbs=generic_verbs, type_adjectives=type_adjectives, type_verbs=type_verbs)
+                            attack_verbs=attack_verbs, type_adjectives=type_adjectives, type_verbs=type_verbs)
                 if not quiet:
                     print("\t" + m.name)
                 self.monsters[t][m.name] = m
@@ -552,7 +483,7 @@ class Dex:
         # Add the description.
         desc_text_x = move_x
         f_desc = ImageFont.truetype(font_file, 18)
-        desc = f'"{monster.description}"'
+        desc = f'“{monster.description}”'
         desc_lines = textwrap.wrap(desc, width=desc_width)
         desc_height = 0
         desc_heights = []

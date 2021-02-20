@@ -13,6 +13,7 @@ if __name__ == "__main__":
              "monster_type.py",
              "move.py",
              "rarity.py",
+             "wv.py",
              "zine.py"]
     md = PyMdDoc(input_directory=Path("procemon"), files=files)
     md.get_docs(output_directory=Path("doc/api"))

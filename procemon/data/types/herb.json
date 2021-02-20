@@ -1,4 +1,33 @@
 {
+  "adjectives": [
+    "almond",
+    "aromatic",
+    "cherry",
+    "chocolate",
+    "citrus",
+    "cream",
+    "edible",
+    "erect",
+    "flowering",
+    "fragrant",
+    "ginger",
+    "hardy",
+    "herbaceous",
+    "herbal",
+    "honey",
+    "medicinal",
+    "mint",
+    "olive",
+    "ornamental",
+    "peanut",
+    "perennial",
+    "rhizomatous",
+    "salt",
+    "savory",
+    "succulent",
+    "vegetable",
+    "woody"
+  ],
   "imagenet": "herb",
   "monster_type": "herb",
   "nouns": [
@@ -57,6 +86,16 @@
     "grass",
     "mint",
     "curry"
+  ],
+  "verbs": [
+    "bean",
+    "cake",
+    "erect",
+    "flavor",
+    "frost",
+    "fruit",
+    "grass",
+    "plant"
   ],
   "wikipedia": "herb"
 }

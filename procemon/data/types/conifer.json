@@ -1,4 +1,40 @@
 {
+  "adjectives": [
+    "bamboo",
+    "birch",
+    "boreal",
+    "calcareous",
+    "coniferous",
+    "deciduous",
+    "dense",
+    "endemic",
+    "epiphytic",
+    "evergreen",
+    "fast-growing",
+    "flowering",
+    "hardwood",
+    "herbaceous",
+    "leguminous",
+    "lowland",
+    "mesophytic",
+    "moist",
+    "montane",
+    "mossy",
+    "oak",
+    "primeval",
+    "riparian",
+    "sclerophyllous",
+    "scrubby",
+    "serpentine",
+    "shrubby",
+    "spruce",
+    "subalpine",
+    "subtropical",
+    "temperate",
+    "upland",
+    "wattle",
+    "woodland"
+  ],
   "imagenet": "conifer",
   "monster_type": "conifer",
   "nouns": [
@@ -31,6 +67,15 @@
     "nagi",
     "miro",
     "matai"
+  ],
+  "verbs": [
+    "bark",
+    "birch",
+    "blackbird",
+    "forest",
+    "pine",
+    "spruce",
+    "wattle"
   ],
   "wikipedia": "conifer"
 }

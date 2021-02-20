@@ -1,4 +1,17 @@
 {
+  "adjectives": [
+    "aspen",
+    "birch",
+    "cedar",
+    "elfin",
+    "grouse",
+    "lilac",
+    "mauve",
+    "plum",
+    "spruce",
+    "subalpine",
+    "woolly"
+  ],
   "imagenet": "balsam",
   "monster_type": "balsam",
   "nouns": [
@@ -182,6 +195,17 @@
     "madderwort",
     "madder",
     "munjeet"
+  ],
+  "verbs": [
+    "birch",
+    "fawn",
+    "grouse",
+    "gull",
+    "laurel",
+    "pine",
+    "quill",
+    "spruce",
+    "stag"
   ],
   "wikipedia": "balsam"
 }

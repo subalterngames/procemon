@@ -1,4 +1,12 @@
 {
+  "adjectives": [
+    "evergreen",
+    "expendable",
+    "jet",
+    "peregrine",
+    "stealthy",
+    "supersonic"
+  ],
   "imagenet": "raptor",
   "monster_type": "raptor",
   "nouns": [
@@ -36,6 +44,10 @@
     "condor",
     "hooter",
     "owlet"
+  ],
+  "verbs": [
+    "blackbird",
+    "falcon"
   ],
   "wikipedia": "Bird_of_prey"
 }

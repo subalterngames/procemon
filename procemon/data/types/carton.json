@@ -1,4 +1,16 @@
 {
+  "adjectives": [
+    "bubbly",
+    "cardboard",
+    "chocolate",
+    "cream",
+    "detergent",
+    "filling",
+    "liquid",
+    "milk",
+    "skim",
+    "vanilla"
+  ],
   "imagenet": "carton",
   "monster_type": "carton",
   "nouns": [
@@ -31,6 +43,22 @@
     "tinderbox",
     "pyxis",
     "paintbox"
+  ],
+  "verbs": [
+    "bottle",
+    "bucket",
+    "butter",
+    "candy",
+    "cheese",
+    "coke",
+    "crate",
+    "cream",
+    "milk",
+    "perfume",
+    "sandwich",
+    "scoop",
+    "syrup",
+    "tube"
   ],
   "wikipedia": "carton"
 }

@@ -1,4 +1,29 @@
 {
+  "adjectives": [
+    "bald",
+    "bushy",
+    "cedar",
+    "chestnut",
+    "cichlid",
+    "dusky",
+    "endangered",
+    "equine",
+    "feral",
+    "grizzly",
+    "grouse",
+    "highland",
+    "mammoth",
+    "mountain",
+    "roan",
+    "sable",
+    "spruce",
+    "tailed",
+    "vermilion",
+    "walnut",
+    "wild",
+    "woodland",
+    "woolly"
+  ],
   "imagenet": "antelope",
   "monster_type": "antelope",
   "nouns": [
@@ -33,6 +58,17 @@
     "guib",
     "waterbuck",
     "oryx"
+  ],
+  "verbs": [
+    "bald",
+    "crest",
+    "eagle",
+    "falcon",
+    "goose",
+    "hare",
+    "herd",
+    "pine",
+    "spruce"
   ],
   "wikipedia": "Antelope"
 }

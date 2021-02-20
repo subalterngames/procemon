@@ -1,4 +1,35 @@
 {
+  "adjectives": [
+    "antique",
+    "attached",
+    "brick",
+    "buggy",
+    "building",
+    "built",
+    "custom",
+    "eastbound",
+    "electric",
+    "fitted",
+    "freight",
+    "interurban",
+    "lane",
+    "livery",
+    "locomotive",
+    "motor",
+    "motorized",
+    "mounted",
+    "pedestrian",
+    "racing",
+    "rear",
+    "rental",
+    "riding",
+    "road",
+    "trunk",
+    "westbound",
+    "wheeled",
+    "winding",
+    "wooden"
+  ],
   "imagenet": "carriage",
   "monster_type": "carriage",
   "nouns": [
@@ -177,6 +208,17 @@
     "tram",
     "wain",
     "wagon"
+  ],
+  "verbs": [
+    "boat",
+    "bridge",
+    "line",
+    "rail",
+    "rope",
+    "ship",
+    "taxi",
+    "train",
+    "truck"
   ],
   "wikipedia": "carriage"
 }

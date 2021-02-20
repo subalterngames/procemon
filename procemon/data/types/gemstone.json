@@ -1,4 +1,13 @@
 {
+  "adjectives": [
+    "amethyst",
+    "encrusted",
+    "extractive",
+    "lithographic",
+    "omnibus",
+    "sapphire",
+    "textile"
+  ],
   "imagenet": "gem",
   "monster_type": "gemstone",
   "nouns": [
@@ -348,6 +357,11 @@
     "hambergite",
     "clinochlore",
     "pearl"
+  ],
+  "verbs": [
+    "diamond",
+    "lithograph",
+    "mezzotint"
   ],
   "wikipedia": "gemstone"
 }

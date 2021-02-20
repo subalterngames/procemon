@@ -1,4 +1,21 @@
 {
+  "adjectives": [
+    "aquatic",
+    "botanic",
+    "botanical",
+    "breeding",
+    "citrus",
+    "flowering",
+    "horticultural",
+    "interpretive",
+    "lilac",
+    "lupine",
+    "migratory",
+    "perennial",
+    "reptile",
+    "wild",
+    "woodland"
+  ],
   "imagenet": "wildflower",
   "monster_type": "wildflower",
   "nouns": [
@@ -176,6 +193,19 @@
     "madderwort",
     "madder",
     "munjeet"
+  ],
+  "verbs": [
+    "blossom",
+    "canker",
+    "flower",
+    "garden",
+    "grass",
+    "pasture",
+    "quail",
+    "rhubarb",
+    "snail",
+    "swamp",
+    "tree"
   ],
   "wikipedia": "wildflower"
 }

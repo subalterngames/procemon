@@ -1,4 +1,37 @@
 {
+  "adjectives": [
+    "antivirus",
+    "automotive",
+    "cellular",
+    "component",
+    "confectionary",
+    "conglomerate",
+    "desktop",
+    "detergent",
+    "electric",
+    "electrical",
+    "electromechanical",
+    "electronic",
+    "giant",
+    "household",
+    "industrial",
+    "mechanic",
+    "micro",
+    "mobile",
+    "petrochemical",
+    "pharmaceutical",
+    "plastics",
+    "portable",
+    "rental",
+    "retail",
+    "sales",
+    "store",
+    "textile",
+    "utility",
+    "wholesale",
+    "wireless",
+    "wiring"
+  ],
   "imagenet": "appliance",
   "monster_type": "appliance",
   "nouns": [
@@ -121,6 +154,17 @@
     "water",
     "bread",
     "cleaner"
+  ],
+  "verbs": [
+    "chain",
+    "chip",
+    "company",
+    "phone",
+    "plug",
+    "shop",
+    "snack",
+    "warehouse",
+    "wholesale"
   ],
   "wikipedia": "Home_appliance"
 }
