@@ -11,13 +11,11 @@ These are stored in the .json monster type files.
 
 - `quiet` If True, suppress console output.
 
-- `wv` The word vectors model.
-
 - `verbs` A list of all possible verbs.
 
 - `adjectives` A list of all possible adjectives.
 
-- `animals` A list of animal nouns. Turns out that a lot of animal nouns are also verbs! We want to ignore these.
+- `wv` The word vectors model.
 
 ***
 
@@ -45,12 +43,13 @@ _Returns:_  The word vector KeyedVectors model.
 
 **`self.get_attack_verbs()`**
 
-**`self.get_attack_verbs(distance=0.5)`**
+**`self.get_attack_verbs(distance=0.5, write=False)`**
 
 
 | Parameter | Type | Default | Description |
 | --- | --- | --- | --- |
 | distance |  float  | 0.5 | The verb must be this close to an "attack verb". |
+| write |  bool  | False | If True, write the list to disk. |
 
 _Returns:_  A list of all verbs that are nearby an "attack" verb.
 

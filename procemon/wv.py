@@ -22,21 +22,20 @@ class WV:
         """
         self.quiet = quiet
         """:field
-        The word vectors model.
-        """
-        self.wv: KeyedVectors = self.get_word_vector_model()
-        """:field
         A list of all possible verbs.
         """
         self.verbs: List[str] = MOVES_DIRECTORY.joinpath("verbs.txt").read_text(encoding="utf-8").split("\n")
+        # Remove auxiliary verbs.
+        aux_verbs: List[str] = MOVES_DIRECTORY.joinpath("auxiliary_verbs.txt").read_text(encoding="utf-8").split("\n")
+        self.verbs = [v for v in self.verbs if v not in aux_verbs]
         """:field
         A list of all possible adjectives.
         """
         self.adjectives: List[str] = MOVES_DIRECTORY.joinpath("adjectives.txt").read_text(encoding="utf-8").split("\n")
         """:field
-        A list of animal nouns. Turns out that a lot of animal nouns are also verbs! We want to ignore these.
+        The word vectors model.
         """
-        self.animals: List[str] = loads(TYPES_DIRECTORY.joinpath("animal.json").read_text(encoding="utf-8"))["nouns"]
+        self.wv: KeyedVectors = self.get_word_vector_model()
 
     def get_word_vector_model(self) -> KeyedVectors:
         """
@@ -67,9 +66,10 @@ class WV:
             print("Loading word vector model (be patient!)...")
         return KeyedVectors.load_word2vec_format(str(word_vec_path.resolve()), binary=False)
 
-    def get_attack_verbs(self, distance: float = 0.5) -> List[str]:
+    def get_attack_verbs(self, distance: float = 0.5, write: bool = False) -> List[str]:
         """
         :param distance: The verb must be this close to an "attack verb".
+        :param write: If True, write the list to disk.
 
         :return: A list of all verbs that are nearby an "attack" verb.
         """
@@ -92,7 +92,14 @@ class WV:
                 # This word isn't isn't in the word vector model. Ignore it.
                 except KeyError:
                     done = True
-        return list(sorted(set(attack_verbs)))
+        # Remove duplicates.
+        attack_verbs = list(sorted(set(attack_verbs)))
+        # Write the list to disk.
+        if write:
+            MOVES_DIRECTORY.joinpath("attack_verbs.txt").write_text("\n".join(attack_verbs), encoding="utf-8")
+            if not self.quiet:
+                print("Got attack verbs and wrote them to disk.")
+        return attack_verbs
 
     def get_type_verbs(self, monster_type: str) -> List[str]:
         """
@@ -111,7 +118,7 @@ class WV:
         while action_verb_distance < 1 and len(type_verbs) < 8:
             action_verbs: List[str] = self.get_attack_verbs(distance=action_verb_distance)
             for v in self.verbs:
-                if len(v) <= 3 or v not in action_verbs or v in type_verbs or v in self.animals:
+                if len(v) <= 3 or v not in action_verbs or v in type_verbs:
                     continue
                 # If the verb is nearby the monster type, add it to the list.
                 try:
