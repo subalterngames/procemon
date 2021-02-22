@@ -75,6 +75,10 @@
 
 # Changelog
 
+## 1.2.1
+
+- Updated the image of the cards in the README
+
 ## 1.2.0
 
 - Removed types: Antelope, Mollusk, Raptor
