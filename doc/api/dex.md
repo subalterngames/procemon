@@ -30,14 +30,14 @@ When created, the dex will randomly select types and moods, assign verbs and adj
 
 - `types` A dictionary of monster types in this dex. Key = the name of the type. Value = a `MonsterType` object.
 
+- `color_indices` The indices of colors in the palette mapped to names of monster types.
+
 - `dst` The output directory of the dex.
 
 - `monsters` Monsters in the dex sorted by type name.
 
 - `images_per_type` A dictionary of images per monster type. Key = The monster type. Value = The images.
 This is populated as-needed i.e. whenever we need images for a new type.
-
-- `color_indices` The indices of colors in the palette mapped to names of monster types.
 
 ***
 
@@ -194,4 +194,12 @@ _This is a static function._
 | string |  str |  | A string that might have characters that the card font doesn't support. |
 
 _Returns:_  A converted string in which all characters are supported by the card font.
+
+#### get_all_types
+
+**`Dex.get_all_types()`**
+
+_This is a static function._
+
+_Returns:_  A list of all available `MonsterTypes`.
 

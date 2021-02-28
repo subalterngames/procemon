@@ -5,7 +5,7 @@ readme = Path('README.md').read_text(encoding='utf-8')
 
 setup(
     name='procemon',
-    version="1.2.2",
+    version="1.3.0",
     description='Procedurally generated trading card game',
     long_description=readme,
     long_description_content_type='text/markdown',

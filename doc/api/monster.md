@@ -13,6 +13,10 @@ A monster has a name, two types, two moves, and some flavor text.
 | `WIKIPEDIA` | Dict[str, str] | Wikipedia text per monster type or noun. Key = The type or noun. Value = Wikipedia text. |
 | `BAD_WIKIPEDIA_URLS_PATH ` |  | The path to the list of bad Wikipedia URLs. |
 | `BAD_WIKIPEDIA_URLS` | List[str] | A list of known bad Wikipedia URLs. |
+| `CONSONANT_SEQUENCES` | List[str] | A list of consonant sequences that appear in English.
+    Scraped from here: http://www.ashley-bovan.co.uk/words/partsofspeech.html |
+| `VOWELS` | List[str] | A list of vowels. |
+| `VOWELS_NOT_Y` | List[str] | A list of vowels without Y. |
 
 ***
 

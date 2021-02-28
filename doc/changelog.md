@@ -1,11 +1,21 @@
-## 1.2.2
+## 1.3.0
 
 - Moved changelog from README to this document
+- Removed type: Metal (There aren't any valid images on ImageNet!)
 - Fixed: Sometimes the flavor text of a card includes Unicode characters that the font doesn't support (this also happens very rarely if the card is a Sport-type). Now, unsupported characters are automatically replaced by supported characters.
   - (Backend): Added: `util/font_test.py` to check cached word lists for unsupported characters
   - (Backend): Added required modules: `Unidecode` and `fonttools`
 - Fixed: Sometimes, the text of the second move on the card overlaps with the flavor text
 - Fixed: Sometimes, a move without a conditional (i.e. "roll a die") can deal bonus damage (which doesn't make sense)
+- Fixed: Crash if the dex has more monster types than colors in the palette
+- Fixed: Monster names often have sequences of consonants that are impossible to pronounce. Now, when a name is generated, it is compared to a list of 3-letter consonant sequences; if it has an invalid sequence, the middle (second) consonant is replaced with a random vowel. It's still possible for a word to remain unpronounceable, just less likely.
+  - (Backend): Added `data/types/consonant_sequences.txt`
+  - (Backend) Added: `Monster.CONSONANT_SEQUENCES`, `Monster.VOWELS`, and `Monster.VOWELS_NOT_Y` class variables
+- Fixed: Monster names sometimes include non-alphabetical characters (hyphens are still allowed)
+- Fixed: Bad Wikipedia key for Boat type
+- (Backend) Added: `image_url_test.py` Make sure that each monster type has enough images
+- (Backend) Added: `Dex.get_all_types()` Returns all possible monster types
+
 
 ## 1.2.1
 

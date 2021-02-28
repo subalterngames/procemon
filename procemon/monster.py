@@ -9,7 +9,7 @@ import markovify
 from procemon.monster_type import MonsterType
 from procemon.move import Move
 from procemon.rarity import Rarity
-from procemon.paths import FLAVOR_TEXT_DIRECTORY
+from procemon.paths import FLAVOR_TEXT_DIRECTORY, TYPES_DIRECTORY
 
 
 class Monster:
@@ -29,6 +29,20 @@ class Monster:
     A list of known bad Wikipedia URLs.
     """
     BAD_WIKIPEDIA_URLS: List[str] = BAD_WIKIPEDIA_URLS_PATH.read_text(encoding="utf-8").split("\n")
+    """:class_var
+    A list of consonant sequences that appear in English.
+    Scraped from here: http://www.ashley-bovan.co.uk/words/partsofspeech.html
+    """
+    CONSONANT_SEQUENCES: List[str] = TYPES_DIRECTORY.joinpath("consonant_sequences.txt").read_text(encoding="utf-8").\
+        split("\n")
+    """:class_var
+    A list of vowels.
+    """
+    VOWELS: List[str] = ["a", "e", "i", "o", "u", "y"]
+    """:class_var
+    A list of vowels without Y.
+    """
+    VOWELS_NOT_Y: List[str] = VOWELS[:-1]
 
     def __init__(self, primary_type: MonsterType, all_types: List[MonsterType], attack_verbs: List[str],
                  type_verbs: Dict[str, List[str]], type_adjectives: Dict[str, List[str]], rarity: Rarity):
@@ -93,15 +107,22 @@ class Monster:
                 self.name += w[start: end]
         # If the first few letters don't have a vowel, insert one at the beginning.
         needs_vowel = True
-        vowels = ["a", "e", "i", "o", "u", "y"]
         for i in range(0, 4):
-            if self.name[i] in vowels:
+            if self.name[i] in Monster.VOWELS:
                 needs_vowel = False
                 break
         if needs_vowel:
-            self.name = choice(vowels[:-1]) + self.name
+            self.name = choice(Monster.VOWELS_NOT_Y) + self.name
+        self.name = self.name.lower()
+        # Look for 3-letter sequences of consequences that probably don't appear often in English.
+        for seq in re.findall(r"([b-df-hj-np-tv-xz]{3})", self.name):
+            if seq not in Monster.CONSONANT_SEQUENCES:
+                # Replace the second consonant with a vowel.
+                seq_list = [s for s in seq]
+                seq_list[1] = choice(Monster.VOWELS)
+                self.name = self.name.replace(seq, "".join(seq_list))
         # Capitalize the name.
-        self.name = self.name.lower().replace("'s", "").title()
+        self.name = self.name.title()
 
         # Get a list of potential wiki words.
         wikipedia_pages: List[str] = words[:]

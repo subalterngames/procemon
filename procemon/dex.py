@@ -85,10 +85,7 @@ class Dex:
         """
 
         # Get all of the types.
-        all_types: List[MonsterType] = list()
-        for f in TYPES_DIRECTORY.iterdir():
-            td = loads(f.read_text(encoding="utf-8"))
-            all_types.append(MonsterType(**td))
+        all_types = Dex.get_all_types()
         # Get a random subset of the types.
         shuffle(all_types)
         all_types = all_types[:num_types]
@@ -98,7 +95,19 @@ class Dex:
         self.types: Dict[str, MonsterType] = dict()
         for t in all_types:
             self.types[t.monster_type] = t
-
+        color_indices: List[int] = list(np.arange(len(Dex.LIGHT_COLORS)))
+        shuffle(color_indices)
+        """:field
+        The indices of colors in the palette mapped to names of monster types.
+        """
+        self.color_indices: Dict[str, int] = dict()
+        color_index: int = 0
+        for t in all_types:
+            self.color_indices[t.monster_type] = color_indices[color_index]
+            color_index += 1
+            # If there are more monster types than colors, go back to the start of the color index list.
+            if color_index >= len(color_indices):
+                color_index = 0
         attack_verbs = MOVES_DIRECTORY.joinpath("attack_verbs.txt").read_text(encoding="utf-8").split("\n")
         shuffle(attack_verbs)
 
@@ -157,15 +166,6 @@ class Dex:
         This is populated as-needed i.e. whenever we need images for a new type.
         """
         self.images_per_type: Dict[str, List[PngImageFile]] = dict()
-
-        color_indices: List[int] = list(np.arange(len(all_types)))
-        shuffle(color_indices)
-        """:field
-        The indices of colors in the palette mapped to names of monster types.
-        """
-        self.color_indices: Dict[str, int] = dict()
-        for t, i in zip(all_types, color_indices):
-            self.color_indices[t.monster_type] = i
 
     def write_json(self) -> None:
         """
@@ -285,7 +285,7 @@ class Dex:
         """
 
         # Make sure that the monster's description string is supported by the card font.
-        # We only check the description because we know that all names, types, verbs, and adjectives are ok. 
+        # We only check the description because we know that all names, types, verbs, and adjectives are ok.
         # See: `util/font_test.py` in the repo.
         monster.description = Dex.get_supported_string(monster.description)
 
@@ -661,3 +661,16 @@ class Dex:
         """
 
         return "".join([(c if c in Dex.SUPPORTED_CHARACTERS else unidecode(c)) for c in string])
+
+    @staticmethod
+    def get_all_types() -> List[MonsterType]:
+        """
+        :return: A list of all available `MonsterTypes`.
+        """
+
+        all_types: List[MonsterType] = list()
+        for f in TYPES_DIRECTORY.iterdir():
+            if f.is_file() and f.suffix == ".json":
+                td = loads(f.read_text(encoding="utf-8"))
+                all_types.append(MonsterType(**td))
+        return all_types
