@@ -5,7 +5,7 @@ readme = Path('README.md').read_text(encoding='utf-8')
 
 setup(
     name='procemon',
-    version="1.2.1",
+    version="1.2.2",
     description='Procedurally generated trading card game',
     long_description=readme,
     long_description_content_type='text/markdown',
@@ -26,5 +26,5 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=["requests", "markovify", "beautifulsoup4", "gensim", "numpy", "pillow", "fpdf",
-                      "perlin-numpy @ git+https://github.com/pvigier/perlin-numpy"],
+                      "perlin-numpy @ git+https://github.com/pvigier/perlin-numpy", "Unidecode", "fonttools"]
 )

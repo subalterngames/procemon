@@ -107,7 +107,8 @@ class Move:
             effect = ""
             # Deal extra damage.
             if self.damage > 0 and random() < 0.3:
-                if random() > 0.66:
+                # Deal bonus damage only on a conditional.
+                if conditional != "" and random() > 0.66:
                     effect = f"+{randint(1, 3)} damage."
                 else:
                     effect = f"This Proćemon deals {randint(1, 3)} to itself."

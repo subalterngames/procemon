@@ -21,6 +21,8 @@ When created, the dex will randomly select types and moods, assign verbs and adj
 | `DARK_COLORS` | np.array | The portion of the palette where there are darker colors. |
 | `CARD_PATH` | Path | The path to the card template image. |
 | `ENERGY_DIRECTORY` | Path | The path to the energy icons. |
+| `FONT_FILE` | str | The path to the font file. |
+| `SUPPORTED_CHARACTERS ` |  | A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763 |
 
 ***
 
@@ -179,4 +181,17 @@ Try to get image URLs from a wnid.
 | wnid |  str |  | The wnid. |
 
 _Returns:_  A list of image URLs in the wnid. Can be empty.
+
+#### get_supported_string
+
+**`Dex.get_supported_string(string)`**
+
+_This is a static function._
+
+
+| Parameter | Type | Default | Description |
+| --- | --- | --- | --- |
+| string |  str |  | A string that might have characters that the card font doesn't support. |
+
+_Returns:_  A converted string in which all characters are supported by the card font.
 

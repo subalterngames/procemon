@@ -11,6 +11,8 @@ from requests import get, head
 from requests.exceptions import ConnectionError, MissingSchema, TooManyRedirects, ChunkedEncodingError, ReadTimeout
 from PIL import Image, ImageFont, ImageDraw, UnidentifiedImageError, ImageOps
 from PIL.PngImagePlugin import PngImageFile
+from fontTools.ttLib import TTFont
+from unidecode import unidecode
 from perlin_numpy.perlin2d import generate_fractal_noise_2d
 from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, MOVES_DIRECTORY
 from procemon.monster_type import MonsterType
@@ -65,6 +67,15 @@ class Dex:
     The path to the energy icons. 
     """
     ENERGY_DIRECTORY: Path = IMAGES_DIRECTORY.joinpath("energy")
+    """:class_var
+    The path to the font file.
+    """
+    FONT_FILE: str = str(FONTS_DIRECTORY.joinpath("pokemon-classic.ttf").resolve())
+    with TTFont(FONT_FILE) as font:
+        """:class_var
+        A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763
+        """
+        SUPPORTED_CHARACTERS = list(set(chr(y[0]) for x in font["cmap"].tables for y in x.cmap.items()))
 
     def __init__(self, num_types: int = 12, num_monsters_per_type: int = 9, quiet: bool = False):
         """
@@ -273,6 +284,11 @@ class Dex:
         :return: A card image for this monster.
         """
 
+        # Make sure that the monster's description string is supported by the card font.
+        # We only check the description because we know that all names, types, verbs, and adjectives are ok. 
+        # See: `util/font_test.py` in the repo.
+        monster.description = Dex.get_supported_string(monster.description)
+
         card = Image.open(str(Dex.CARD_PATH.resolve()))
 
         # Get Perlin noise.
@@ -290,14 +306,9 @@ class Dex:
                 if pixels[x, y] == (255, 255, 255, 255):
                     # Add some Perlin noise.
                     pixels[x, y] = Dex.lighten(bg_color, (perlin_noise[y, x]))
-
-        # Get the font file.
-        font_file: str = str(FONTS_DIRECTORY.joinpath("pokemon-classic.ttf").resolve())
-
         pad_x = 52
-
         # Add the name of the monster.
-        f_header = ImageFont.truetype(font_file, 28)
+        f_header = ImageFont.truetype(Dex.FONT_FILE, 28)
         draw = ImageDraw.Draw(card)
         black = (0, 0, 0, 255)
         header_y = 52
@@ -308,7 +319,7 @@ class Dex:
         draw.text((hp_text_x, header_y), hp_text, black, font=f_header)
 
         # Add the types.
-        f_type = ImageFont.truetype(font_file, 18)
+        f_type = ImageFont.truetype(Dex.FONT_FILE, 18)
         type_text_y = header_y + 50
         type_text_x = pad_x
         # Add the first type.
@@ -339,7 +350,7 @@ class Dex:
         else:
             rarity = "Common"
             rarity_x = hp_text_x
-        f_rarity = ImageFont.truetype(font_file, 18)
+        f_rarity = ImageFont.truetype(Dex.FONT_FILE, 18)
         draw.text((rarity_x, type_text_y), rarity, black, font=f_rarity)
 
         # Draw a box for the image.
@@ -367,8 +378,8 @@ class Dex:
         # Remember where to put the strength.
         move_y_0 = move_y
 
-        f_move_special = ImageFont.truetype(font_file, 18)
-        f_move_damage = ImageFont.truetype(font_file, 28)
+        f_move_special = ImageFont.truetype(Dex.FONT_FILE, 18)
+        f_move_damage = ImageFont.truetype(Dex.FONT_FILE, 28)
         last_line = None
         for i, m in enumerate(monster.moves):
             # Add the energy icon.
@@ -397,7 +408,7 @@ class Dex:
             d_move_y = 95
             # Get the size of the name of the move.
             f_move_size = 24
-            f_move = ImageFont.truetype(font_file, f_move_size)
+            f_move = ImageFont.truetype(Dex.FONT_FILE, f_move_size)
             move_font_text_size = f_move.getsize(m.name)
 
             # The maximum width of the move text is the card minus the width of the damage text (if any).
@@ -408,7 +419,7 @@ class Dex:
             # Reset it to fit.
             while move_font_text_size[0] > max_move_width:
                 f_move_size -= 2
-                f_move = ImageFont.truetype(font_file, f_move_size)
+                f_move = ImageFont.truetype(Dex.FONT_FILE, f_move_size)
                 move_font_text_size = f_move.getsize(m.name)
 
             # Print the move.
@@ -419,7 +430,7 @@ class Dex:
                 line_size = f_move_special.getsize(line)
                 line_y += line_size[1] + 8
             # If there's too much special text, don't print it!
-            if line_y >= 940:
+            if move_text_y + move_font_text_size[1] + 12 >= 930:
                 m.special = ""
                 m.damage = 1
 
@@ -458,7 +469,7 @@ class Dex:
 
             move_y += 12
         # Add the strength.
-        f_strength = ImageFont.truetype(font_file, 22)
+        f_strength = ImageFont.truetype(Dex.FONT_FILE, 22)
         strength_text = f"x2 vs. {monster.strong_against.title()}"
         strength = Image.new('RGBA', f_strength.getsize(strength_text))
         strength_color = list(Dex.DARK_COLORS[self.color_indices[monster.strong_against]])
@@ -482,7 +493,7 @@ class Dex:
             desc_width = 32
         # Add the description.
         desc_text_x = move_x
-        f_desc = ImageFont.truetype(font_file, 18)
+        f_desc = ImageFont.truetype(Dex.FONT_FILE, 18)
         desc = f'“{monster.description}”'
         desc_lines = textwrap.wrap(desc, width=desc_width)
         desc_height = 0
@@ -640,3 +651,13 @@ class Dex:
         # Sometimes there's just whole wnids of bad URLs. We don't need to test them all. We've got places to be!
         shuffle(urls)
         return urls
+
+    @staticmethod
+    def get_supported_string(string: str) -> str:
+        """
+        :param string: A string that might have characters that the card font doesn't support.
+
+        :return: A converted string in which all characters are supported by the card font.
+        """
+
+        return "".join([(c if c in Dex.SUPPORTED_CHARACTERS else unidecode(c)) for c in string])
