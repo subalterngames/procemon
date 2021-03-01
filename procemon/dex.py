@@ -287,6 +287,8 @@ class Dex:
         # Make sure that the monster's description string is supported by the card font.
         # We only check the description because we know that all names, types, verbs, and adjectives are ok.
         # See: `util/font_test.py` in the repo.
+        if monster.description is None:
+            monster.description = "None"
         monster.description = Dex.get_supported_string(monster.description)
 
         card = Image.open(str(Dex.CARD_PATH.resolve()))

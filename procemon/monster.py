@@ -143,14 +143,14 @@ class Monster:
         try:
             model = markovify.Text(txt)
         except KeyError:
-            raise Exception(txt)
+            raise Exception(wikipedia_pages, txt)
         """:field
         A description of the monster.
         """
         self.description: str = model.make_short_sentence(80)
         # Make a few attempts.
         num_attempts = 0
-        while num_attempts < 4 and self.description is None:
+        while num_attempts < 20 and self.description is None:
             num_attempts += 1
             self.description = model.make_short_sentence(80)
         if self.description is None:
@@ -193,7 +193,7 @@ class Monster:
             return ""
         # Test the HEAD header to see if the page exists.
         try:
-            resp = head(url, timeout=10)
+            resp = head(url, timeout=20)
             if resp.status_code != 200 and resp.status_code != 301:
                 Monster.add_to_bad_urls(url)
                 return ""
