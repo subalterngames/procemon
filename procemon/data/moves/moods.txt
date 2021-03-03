@@ -86,8 +86,6 @@ careless
 attacked
 moved
 specified
-suicidal
-trembly
 resentful
 lovable
 exhausted
@@ -109,7 +107,6 @@ resourceful
 intrigued
 shocked
 agitated
-molested
 warm
 knowledgeable
 inquisitive
@@ -118,7 +115,7 @@ deprived
 vicious
 moody
 wishful
-embarassed
+embarrassed
 lousy
 happy
 questioned
@@ -368,7 +365,6 @@ vengeful
 grateful
 quizzical
 bothered
-self-destructive
 peeved
 independent
 compassionate
@@ -680,7 +676,6 @@ inclusive
 humble
 smothered
 threatened
-violated
 betrayed
 used
 mistreated

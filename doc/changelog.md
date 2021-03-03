@@ -1,7 +1,10 @@
+# Changelog
+
 ## 1.3.0
 
 - Moved changelog from README to this document
 - Removed type: Metal (There aren't any valid images on ImageNet!)
+- Removed some moods and verbs that we never want to include
 - Fixed: Sometimes the flavor text of a card includes Unicode characters that the font doesn't support (this also happens very rarely if the card is a Sport-type). Now, unsupported characters are automatically replaced by supported characters.
   - (Backend): Added: `util/font_test.py` to check cached word lists for unsupported characters
   - (Backend): Added required modules: `Unidecode` and `fonttools`
