@@ -1,8 +1,7 @@
 import io
-from random import shuffle
+from random import shuffle, choice
 from json import loads, dumps
 from pathlib import Path
-from secrets import token_urlsafe
 from typing import List, Dict, Optional
 import re
 import textwrap
@@ -13,8 +12,9 @@ from PIL import Image, ImageFont, ImageDraw, UnidentifiedImageError, ImageOps
 from PIL.PngImagePlugin import PngImageFile
 from fontTools.ttLib import TTFont
 from unidecode import unidecode
+import markovify
 from perlin_numpy.perlin2d import generate_fractal_noise_2d
-from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, FONTS_DIRECTORY, MOVES_DIRECTORY
+from procemon.paths import TYPES_DIRECTORY, IMAGES_DIRECTORY, TEXT_FONT, SYMBOL_FONT, MOVES_DIRECTORY, REGIONS_DIRECTORY
 from procemon.monster_type import MonsterType
 from procemon.monster import Monster
 from procemon.rarity import Rarity
@@ -67,15 +67,11 @@ class Dex:
     The path to the energy icons. 
     """
     ENERGY_DIRECTORY: Path = IMAGES_DIRECTORY.joinpath("energy")
-    """:class_var
-    The path to the font file.
-    """
-    FONT_FILE: str = str(FONTS_DIRECTORY.joinpath("pokemon-classic.ttf").resolve())
-    with TTFont(FONT_FILE) as font:
+    with TTFont(TEXT_FONT) as font:
         """:class_var
         A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763
         """
-        SUPPORTED_CHARACTERS = list(set(chr(y[0]) for x in font["cmap"].tables for y in x.cmap.items()))
+        SUPPORTED_CHARACTERS: List[str] = list(set(chr(y[0]) for x in font["cmap"].tables for y in x.cmap.items()))
 
     def __init__(self, num_types: int = 12, num_monsters_per_type: int = 9, quiet: bool = False):
         """
@@ -112,9 +108,18 @@ class Dex:
         shuffle(attack_verbs)
 
         """:field
+        The name of the region of the dex.
+        """
+        self.region: str = Dex.get_region()
+        """:field
+        A random dingbat for the region.
+        """
+        self.region_symbol: str = Dex.get_region_symbol()
+
+        """:field
         The output directory of the dex.
         """
-        self.dst: Path = Path(f"dst/dex/{token_urlsafe(3)}")
+        self.dst: Path = Path(f"dst/dex/{self.region}")
         if not self.dst.exists():
             self.dst.mkdir(parents=True)
         if not quiet:
@@ -172,11 +177,14 @@ class Dex:
         Save the dex as a JSON dictionary.
         """
 
-        data = dict()
+        monsters = dict()
         for t in self.monsters:
-            data[t] = dict()
+            monsters[t] = dict()
             for n in self.monsters[t]:
-                data[t][n] = self.monsters[t][n].__dict__
+                monsters[t][n] = self.monsters[t][n].__dict__
+        data = {"region": self.region,
+                "symbol": self.region_symbol,
+                "dex": monsters}
         self.dst.joinpath("dex.json").write_text(dumps(data, sort_keys=True, indent=2, cls=DexEncoder),
                                                  encoding="utf-8")
 
@@ -309,8 +317,9 @@ class Dex:
                     # Add some Perlin noise.
                     pixels[x, y] = Dex.lighten(bg_color, (perlin_noise[y, x]))
         pad_x = 52
+        font_file = str(TEXT_FONT.resolve())
         # Add the name of the monster.
-        f_header = ImageFont.truetype(Dex.FONT_FILE, 28)
+        f_header = ImageFont.truetype(font_file, 28)
         draw = ImageDraw.Draw(card)
         black = (0, 0, 0, 255)
         header_y = 52
@@ -321,7 +330,7 @@ class Dex:
         draw.text((hp_text_x, header_y), hp_text, black, font=f_header)
 
         # Add the types.
-        f_type = ImageFont.truetype(Dex.FONT_FILE, 18)
+        f_type = ImageFont.truetype(font_file, 18)
         type_text_y = header_y + 50
         type_text_x = pad_x
         # Add the first type.
@@ -352,7 +361,7 @@ class Dex:
         else:
             rarity = "Common"
             rarity_x = hp_text_x
-        f_rarity = ImageFont.truetype(Dex.FONT_FILE, 18)
+        f_rarity = ImageFont.truetype(font_file, 18)
         draw.text((rarity_x, type_text_y), rarity, black, font=f_rarity)
 
         # Draw a box for the image.
@@ -380,8 +389,8 @@ class Dex:
         # Remember where to put the strength.
         move_y_0 = move_y
 
-        f_move_special = ImageFont.truetype(Dex.FONT_FILE, 18)
-        f_move_damage = ImageFont.truetype(Dex.FONT_FILE, 28)
+        f_move_special = ImageFont.truetype(font_file, 18)
+        f_move_damage = ImageFont.truetype(font_file, 28)
         last_line = None
         for i, m in enumerate(monster.moves):
             # Add the energy icon.
@@ -410,7 +419,7 @@ class Dex:
             d_move_y = 95
             # Get the size of the name of the move.
             f_move_size = 24
-            f_move = ImageFont.truetype(Dex.FONT_FILE, f_move_size)
+            f_move = ImageFont.truetype(font_file, f_move_size)
             move_font_text_size = f_move.getsize(m.name)
 
             # The maximum width of the move text is the card minus the width of the damage text (if any).
@@ -421,7 +430,7 @@ class Dex:
             # Reset it to fit.
             while move_font_text_size[0] > max_move_width:
                 f_move_size -= 2
-                f_move = ImageFont.truetype(Dex.FONT_FILE, f_move_size)
+                f_move = ImageFont.truetype(font_file, f_move_size)
                 move_font_text_size = f_move.getsize(m.name)
 
             # Print the move.
@@ -434,6 +443,7 @@ class Dex:
             # If there's too much special text, don't print it!
             if move_text_y + move_font_text_size[1] + 12 >= 930:
                 m.special = ""
+                lines.clear()
                 m.damage = 1
 
             if m.damage > 0:
@@ -471,7 +481,7 @@ class Dex:
 
             move_y += 12
         # Add the strength.
-        f_strength = ImageFont.truetype(Dex.FONT_FILE, 22)
+        f_strength = ImageFont.truetype(font_file, 22)
         strength_text = f"x2 vs. {monster.strong_against.title()}"
         strength = Image.new('RGBA', f_strength.getsize(strength_text))
         strength_color = list(Dex.DARK_COLORS[self.color_indices[monster.strong_against]])
@@ -495,7 +505,7 @@ class Dex:
             desc_width = 32
         # Add the description.
         desc_text_x = move_x
-        f_desc = ImageFont.truetype(Dex.FONT_FILE, 18)
+        f_desc = ImageFont.truetype(font_file, 18)
         desc = f'“{monster.description}”'
         desc_lines = textwrap.wrap(desc, width=desc_width)
         desc_height = 0
@@ -676,3 +686,41 @@ class Dex:
                 td = loads(f.read_text(encoding="utf-8"))
                 all_types.append(MonsterType(**td))
         return all_types
+
+    @staticmethod
+    def get_region() -> str:
+        """
+        :return: The name of the region of the dex.
+        """
+
+        japan = REGIONS_DIRECTORY.joinpath("japan.txt").read_text(encoding="utf-8").split("\n")
+        # Parse Japanese placenames into syllables and treat those as words.
+        placenames = list()
+        for j in japan:
+            syllables = re.findall(r"([b-df-hj-np-tv-z]+[aeiouyūō]|[aeiouyūō][b-df-hj-np-tv-yz]+|[aeiouūō])",
+                                   Dex.get_supported_string(j.lower()))
+            syllables[0] = syllables[0].title()
+            sentence = (" ".join(syllables) + ".").strip()
+            placenames.append(sentence)
+        # Get a list of US county names for spice. Take only a subset of them. Treat each letter as a word.
+        us = REGIONS_DIRECTORY.joinpath("us.txt").read_text(encoding="utf-8").split("\n")
+        shuffle(us)
+        placenames.extend([(" ".join(list(u)) + ".").strip() for u in us[:100]])
+        # Create a markov model.
+        model = markovify.Text(placenames)
+        # Create a "sentence" and convert it to a word.
+        try:
+            return model.make_sentence(tries=100, max_words=12).replace(" ", "")[:-1].lower().title()
+        # Fallback if we fail to make the name.
+        except AttributeError:
+            return "Mystery"
+
+    @staticmethod
+    def get_region_symbol() -> str:
+        """
+        :return: A symbol for the region.
+        """
+
+        with TTFont(str(SYMBOL_FONT.resolve())) as font:
+            chars = list(set(chr(y[0]) for x in font["cmap"].tables for y in x.cmap.items() if chr(y[0]).isalnum()))
+        return choice(chars)

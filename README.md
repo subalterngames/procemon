@@ -41,6 +41,7 @@
 [Read the API documentation here.](https://github.com/subalterngames/procemon/tree/main/doc/api)
 
 - A [Dex](https://github.com/subalterngames/procemon/blob/main/doc/api/dex.md) is a compendium of [MonsterTypes](https://github.com/subalterngames/procemon/blob/main/doc/api/monster_type.md). Per MonsterType, the Dex generates a given number of [Monsters](https://github.com/subalterngames/procemon/blob/main/doc/api/monster.md).
+  - Each Dex has a `region` name, generated via [markov chains](https://github.com/jsvine/markovify) of Japanese cities and prefectures scraped from Wikipedia and US county names scraped from [pycopora](https://github.com/aparrish/pycorpora)
 - Each MonsterType is stored as a JSON object [here](https://github.com/subalterngames/procemon/tree/main/procemon/data/types). MonsterTypes are a few important keywords (such as the name of the type) as well as:
   - A list of `nouns` which will be used to generate monster names. MonsterTypes and their nouns were collected in several ways:
     - Reorganized from a [pycopora](https://github.com/aparrish/pycorpora) dictionary

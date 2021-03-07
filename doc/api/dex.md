@@ -21,8 +21,7 @@ When created, the dex will randomly select types and moods, assign verbs and adj
 | `DARK_COLORS` | np.array | The portion of the palette where there are darker colors. |
 | `CARD_PATH` | Path | The path to the card template image. |
 | `ENERGY_DIRECTORY` | Path | The path to the energy icons. |
-| `FONT_FILE` | str | The path to the font file. |
-| `SUPPORTED_CHARACTERS ` |  | A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763 |
+| `SUPPORTED_CHARACTERS` | List[str] | A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763 |
 
 ***
 
@@ -31,6 +30,10 @@ When created, the dex will randomly select types and moods, assign verbs and adj
 - `types` A dictionary of monster types in this dex. Key = the name of the type. Value = a `MonsterType` object.
 
 - `color_indices` The indices of colors in the palette mapped to names of monster types.
+
+- `region` The name of the region of the dex.
+
+- `region_symbol` A random dingbat for the region.
 
 - `dst` The output directory of the dex.
 
@@ -202,4 +205,20 @@ _Returns:_  A converted string in which all characters are supported by the card
 _This is a static function._
 
 _Returns:_  A list of all available `MonsterTypes`.
+
+#### get_region
+
+**`Dex.get_region()`**
+
+_This is a static function._
+
+_Returns:_  The name of the region of the dex.
+
+#### get_region_symbol
+
+**`Dex.get_region_symbol()`**
+
+_This is a static function._
+
+_Returns:_  A symbol for the region.
 

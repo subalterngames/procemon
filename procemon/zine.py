@@ -2,7 +2,7 @@ from typing import List
 from random import shuffle
 from pathlib import Path
 from fpdf import FPDF
-from procemon.card_back import CardBack
+from PIL.PngImagePlugin import PngImageFile
 
 
 class Zine:
@@ -11,11 +11,12 @@ class Zine:
     """
 
     @staticmethod
-    def create(dex_path: Path, num_pages: int = 13, quiet: bool = False) -> None:
+    def create(dex_path: Path, card_back: PngImageFile, num_pages: int = 13, quiet: bool = False) -> None:
         """
         Create a zine from a dex of cards. To create the cards, see: `Dex.create_cards()`
 
         :param dex_path: The path to the cards directory.
+        :param card_back: The image for the back of the card.
         :param num_pages: Number of pages in the zine.
         :param quiet: If True, suppress console output.
         """
@@ -23,8 +24,7 @@ class Zine:
         if not quiet:
             print("Creating card back...")
         # Create a card back.
-        card_back = CardBack.get()
-        card_back_path = dex_path.joinpath("card_back.png")
+        card_back_path = dex_path.joinpath("0_card_back.png")
         card_back.save(str(card_back_path.resolve()))
         print("...Done!")
 
@@ -42,8 +42,6 @@ class Zine:
         # Add the card back.
         pdf.image(str(card_back_path.resolve()), left_x, 1, w, h)
         pdf.image(str(card_back_path.resolve()), right_x, 1, w, h)
-        # Delete the temporary file.
-        card_back_path.unlink()
 
         # Get all of the card paths and randomize the order.
         card_paths: List[Path] = list()

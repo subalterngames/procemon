@@ -3,7 +3,7 @@ from PIL import Image, ImageFont, ImageDraw
 from PIL.PngImagePlugin import PngImageFile
 import numpy as np
 from perlin_numpy.perlin2d import generate_fractal_noise_2d
-from procemon.paths import IMAGES_DIRECTORY, FONTS_DIRECTORY
+from procemon.paths import IMAGES_DIRECTORY, TEXT_FONT, SYMBOL_FONT
 
 
 class CardBack:
@@ -12,8 +12,11 @@ class CardBack:
     """
 
     @staticmethod
-    def get() -> PngImageFile:
+    def get(region: str, symbol: str) -> PngImageFile:
         """
+        :param region: The name of the dex region.
+        :param symbol: The region's symbol.
+
         :return: An image of a card back.
         """
 
@@ -33,15 +36,27 @@ class CardBack:
                     pixels[x, y] = tuple([int(ch) for ch in color])
 
         # Add Subaltern Games text.
-        font_file: str = str(FONTS_DIRECTORY.joinpath("pokemon-classic.ttf").resolve())
-        font = ImageFont.truetype(font_file, 12)
+        font = ImageFont.truetype(str(TEXT_FONT.resolve()), 12)
         draw = ImageDraw.Draw(card)
-        draw.text((52, card.size[1] - 80), "Copywrite 2021 Subaltern Games", "white", font=font)
-        draw.text((52, card.size[1] - 80 + 16), "https://subalterngames.com", "white", font=font)
-
+        pad = 52
+        draw.text((pad, card.size[1] - 80), "Copyright 2021 Subaltern Games", "white", font=font)
+        version_y = card.size[1] - 80 + 16
+        draw.text((pad, version_y), "https://subalterngames.com", "white", font=font)
         # Add the version.
-        draw.text((card.size[0] - 116, card.size[1] - 80 + 16), str(get_distribution("procemon")).split(" ")[1],
-                  "white", font=font)
+        version = str(get_distribution("procemon")).split(" ")[1]
+        version_x = int(card.size[0] - font.getsize(version)[0] - pad)
+        draw.text((version_x, version_y), version, "white", font=font)
+
+        # Draw the region.
+        region = f"{region} Region"
+        # Center the text.
+        region_x = int(card.size[0] - font.getsize(region)[0] - pad)
+        draw.text((region_x, pad), region, "white", font=font)
+        # Draw a cool symbol.
+        symbol_font = ImageFont.truetype(str(SYMBOL_FONT.resolve()), 24)
+        symbol_x = region_x - symbol_font.getsize(symbol)[0] - 12
+        symbol_y = pad
+        draw.text((symbol_x, symbol_y), symbol, "white", font=symbol_font, encoding="symb")
 
         # Add the logo.
         logo = Image.open(str(IMAGES_DIRECTORY.joinpath("logo.png").resolve()))

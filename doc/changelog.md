@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4.0
+
+- Each dex now has a random region name and symbol
+  - Added Rosette font
+  - Added `japan.txt` and `us.txt` place-name lists
+  - Card backs include the region name and symbol
+- Fixed: Sometimes, the text of the second move on the card overlaps with the flavor text (this is probably _actually_ fixed now)
+
 ## 1.3.0
 
 - Moved changelog from README to this document
