@@ -710,7 +710,13 @@ class Dex:
         model = markovify.Text(placenames)
         # Create a "sentence" and convert it to a word.
         try:
-            return model.make_sentence(tries=100, max_words=12).replace(" ", "")[:-1].lower().title()
+            region = model.make_sentence(tries=100, max_words=12).replace(" ", "")[:-1].lower().title()
+            # Add a vowel to the end of the name.
+            if region[-1] == "e" or region[-1] == "s":
+                return region
+            if region[-1] not in "aiou":
+                region += choice("aiou")
+            return region
         # Fallback if we fail to make the name.
         except AttributeError:
             return "Mystery"
