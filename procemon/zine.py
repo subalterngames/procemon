@@ -46,7 +46,7 @@ class Zine:
         # Get all of the card paths and randomize the order.
         card_paths: List[Path] = list()
         for f in dex_path.iterdir():
-            if not f.is_file() or f.suffix != ".png":
+            if not f.is_file() or f.suffix != ".png" or f.name == "0_card_back.png":
                 continue
             card_paths.append(f)
         shuffle(card_paths)

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.0
+
+- Fixed: Images can't be generated because Imagenet removed its API! Now, Procemon now scrapes Wikipedia images instead
+  - Removed functions and files for scraping Imagenet wnids
+- Fixed: Zines sometimes include the card back image as a card front image
+
 ## 1.4.0
 
 - Each dex now has a random region name and symbol

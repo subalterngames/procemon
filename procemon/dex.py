@@ -28,26 +28,6 @@ class Dex:
     """
 
     """:class_var
-    The path to the file of URLs that we know are bad.
-    """
-    BAD_IMAGE_URLS_PATH: Path = IMAGES_DIRECTORY.joinpath("bad_image_urls.txt")
-    """:class_var
-    A list of known bad URLs.
-    """
-    BAD_IMAGE_URLS: List[str] = BAD_IMAGE_URLS_PATH.read_text(encoding="utf-8").split("\n")
-    """:class_var
-    The path to the file of URLs that we know are bad.
-    """
-    BAD_WNIDS_PATH: Path = IMAGES_DIRECTORY.joinpath("bad_wnids.txt")
-    """:class_var
-    A list of known bad wnids.
-    """
-    BAD_WNIDS: List[str] = BAD_WNIDS_PATH.read_text(encoding="utf-8").split("\n")
-    """:class_var
-    Imagenet data. Key = A word. Value = The wnid corresponding to that word.
-    """
-    IMAGENET: Dict[str, str] = loads(IMAGES_DIRECTORY.joinpath("imagenet_wnids.json").read_text(encoding="utf-8"))
-    """:class_var
     A numpy array of a color palette.
     """
     PALETTE: np.array = np.load(str(IMAGES_DIRECTORY.joinpath("palette.npy").resolve()))
@@ -72,6 +52,11 @@ class Dex:
         A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763
         """
         SUPPORTED_CHARACTERS: List[str] = list(set(chr(y[0]) for x in font["cmap"].tables for y in x.cmap.items()))
+    """:class_var
+    Base URL for the Wikipedia API. Source: https://stackoverflow.com/a/41807620
+    """
+    WIKIPEDIA_API_URL: str = "https://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&format=json&iiprop=url" \
+                             "&generator=images&titles="
 
     def __init__(self, num_types: int = 12, num_monsters_per_type: int = 9, quiet: bool = False):
         """
@@ -236,37 +221,56 @@ class Dex:
         :return: A list of converted images for this type using ImageNet data.
         """
 
-        # Get the wnids of the type name and the nouns. Some words might not have wnids.
-        wnids = []
-        for n in self.types[monster_type].nouns:
-            if n in Dex.IMAGENET:
-                wnids.append(Dex.IMAGENET[n])
-        # Randomize the order of the wnids.
-        shuffle(wnids)
-        # Insert the root wnid at start.
-        wnids.insert(0, Dex.IMAGENET[self.types[monster_type].imagenet])
+        # Get a list of nouns that are known not to have any images.
+        no_images_path = IMAGES_DIRECTORY.joinpath("no_images.txt")
+        no_images = no_images_path.read_text(encoding="utf-8").split("\n")
 
-        images: List[PngImageFile] = list()
-
-        # Get a list of URLs from the list of wnids.
-        wnid_index = 0
-        while wnid_index < len(wnids) and len(images) < self.__num_monsters_per_type:
-            wnid = wnids[wnid_index]
-            # Get URLs from the wnid.
-            urls = Dex.get_wnid_urls(wnid=wnid)
-            if len(urls) == 0:
-                wnid_index += 1
-                if wnid not in Dex.BAD_WNIDS:
-                    Dex.add_to_bad_urls(wnid)
+        nouns = self.types[monster_type].nouns[:]
+        nouns.append(self.types[monster_type].wikipedia)
+        # Skip any nouns that are known to not have images.
+        nouns = [n for n in nouns if n not in no_images]
+        # Randomize the list of nouns.
+        shuffle(nouns)
+        # A dictionary of images, where the key is the URL.
+        images: Dict[str, PngImageFile] = dict()
+        noun_index = 0
+        while len(images) < self.__num_monsters_per_type and noun_index < len(nouns):
+            n = nouns[noun_index]
+            noun_index += 1
+            # Try to get images from a Wikipedia page. If the page doesn't exist, remember not to try it again.
+            try:
+                resp = get(f"{Dex.WIKIPEDIA_API_URL}{n}", timeout=20)
+                if resp.status_code != 200 and resp.status_code != 301:
+                    no_images.append(n)
+                    continue
+                data = resp.json()
+            except ConnectionError:
+                no_images.append(n)
                 continue
-            # We'll only test these and move on if they're no good.
-            urls = urls[:20]
-            # Test each URL.
+            except ReadTimeout:
+                no_images.append(n)
+                continue
+            # This page doesn't exist.
+            if "query" not in data:
+                no_images.append(n)
+                continue
+            urls: List[str] = list()
+            for page in data["query"]["pages"]:
+                # Pages with IDs are logos or icons.
+                if "pageid" in data["query"]["pages"][page]:
+                    continue
+                for image_info in data["query"]["pages"][page]["imageinfo"]:
+                    urls.append(image_info["url"])
+            if len(urls) == 0:
+                no_images.append(n)
+                continue
             for url in urls:
+                # Skip URLs that we've already added.
+                if url in images:
+                    continue
+                # Try to convert the image URL into a PIL image.
                 img = Dex.get_image_from_url(url=url)
-                # Remember that this is a bad image so we never try it again.
                 if img is None:
-                    Dex.add_to_bad_urls(url)
                     continue
                 # Convert to grayscale.
                 img = ImageOps.grayscale(img)
@@ -280,10 +284,10 @@ class Dex:
                 # Enlarge.
                 img = img.resize((400, 400), Image.NEAREST)
                 # Append the image.
-                images.append(img)
-            wnid_index += 1
-        shuffle(images)
-        return images
+                images[url] = img
+        # Remember the nouns that don't have images.
+        no_images_path.write_text(("\n".join(list(sorted(set(no_images))))).strip(), encoding="utf-8")
+        return list(images.values())
 
     def get_card(self, monster: Monster) -> PngImageFile:
         """
@@ -529,30 +533,6 @@ class Dex:
         return card
 
     @staticmethod
-    def add_to_bad_urls(url: str) -> None:
-        """
-        Remember that this a bad URL.
-
-        :param url: The bad URL.
-        """
-
-        Dex.BAD_IMAGE_URLS.append(url)
-        with io.open(str(Dex.BAD_IMAGE_URLS_PATH.resolve()), "at", encoding="utf-8") as f:
-            f.write(url + "\n")
-
-    @staticmethod
-    def add_to_bad_wnids(wnid: str) -> None:
-        """
-        Remember that this a bad wnid.
-
-        :param wnid: The wnid URL.
-        """
-
-        Dex.BAD_WNIDS.append(wnid)
-        with io.open(str(Dex.BAD_WNIDS_PATH.resolve()), "at", encoding="utf-8") as f:
-            f.write(wnid + "\n")
-
-    @staticmethod
     def lighten(color, percent) -> tuple:
         """
         Lighten a color.
@@ -599,6 +579,8 @@ class Dex:
         # If it takes too long to get the image, assume that it doesn't exist.
         except ReadTimeout:
             return None
+        except MissingSchema:
+            return None
 
         # Try to get the image.
         try:
@@ -624,45 +606,6 @@ class Dex:
             return None
         except ReadTimeout:
             return None
-
-    @staticmethod
-    def get_wnid_urls(wnid: str) -> List[str]:
-        """
-        Try to get image URLs from a wnid.
-
-        :param wnid: The wnid.
-
-        :return: A list of image URLs in the wnid. Can be empty.
-        """
-        if wnid.startswith("-"):
-            wnid = wnid[1:]
-        if wnid in Dex.BAD_WNIDS:
-            return []
-        got_resp = False
-        resp = None
-        num_attempts = 0
-        while not got_resp and num_attempts < 10:
-            # Try to get the data. We know all of these URLs are valid.
-            try:
-                resp = get(f"http://www.image-net.org/api/text/imagenet.synset.geturls.getmapping?wnid={wnid}")
-                got_resp = True
-            except ConnectionError:
-                num_attempts += 1
-                continue
-        # If this wnid is totally bogus, remember not to try it again.
-        if not got_resp or "Invalid" in resp.content.decode("utf-8"):
-            Dex.add_to_bad_wnids(wnid)
-            return []
-        # Get all of the image URLs.
-        urls = resp.content.decode("utf-8").split("\r\n")
-        urls = [url.split(" ")[1].strip() for url in urls if len(url.strip()) > 0 and
-                url.split(" ")[1].strip() not in Dex.BAD_IMAGE_URLS]
-        # If there are no URLs, this is a bad wnid.
-        if len(urls) == 0:
-            Dex.add_to_bad_wnids(wnid)
-        # Sometimes there's just whole wnids of bad URLs. We don't need to test them all. We've got places to be!
-        shuffle(urls)
-        return urls
 
     @staticmethod
     def get_supported_string(string: str) -> str:
