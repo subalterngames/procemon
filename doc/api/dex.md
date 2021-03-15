@@ -11,17 +11,13 @@ When created, the dex will randomly select types and moods, assign verbs and adj
 
 | Variable | Type | Description |
 | --- | --- | --- |
-| `BAD_IMAGE_URLS_PATH` | Path | The path to the file of URLs that we know are bad. |
-| `BAD_IMAGE_URLS` | List[str] | A list of known bad URLs. |
-| `BAD_WNIDS_PATH` | Path | The path to the file of URLs that we know are bad. |
-| `BAD_WNIDS` | List[str] | A list of known bad wnids. |
-| `IMAGENET` | Dict[str, str] | Imagenet data. Key = A word. Value = The wnid corresponding to that word. |
 | `PALETTE` | np.array | A numpy array of a color palette. |
 | `LIGHT_COLORS` | np.array | The portion of the palette where there are light colors. |
 | `DARK_COLORS` | np.array | The portion of the palette where there are darker colors. |
 | `CARD_PATH` | Path | The path to the card template image. |
 | `ENERGY_DIRECTORY` | Path | The path to the energy icons. |
 | `SUPPORTED_CHARACTERS` | List[str] | A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763 |
+| `WIKIPEDIA_API_URL` | str | Base URL for the Wikipedia API. Source: https://stackoverflow.com/a/41807620 |
 
 ***
 
@@ -113,30 +109,6 @@ _Returns:_  A list of converted images for this type using ImageNet data.
 
 _Returns:_  A card image for this monster.
 
-#### add_to_bad_urls
-
-**`Dex.add_to_bad_urls(url)`**
-
-_This is a static function._
-
-Remember that this a bad URL.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| url |  str |  | The bad URL. |
-
-#### add_to_bad_wnids
-
-**`Dex.add_to_bad_wnids(wnid)`**
-
-_This is a static function._
-
-Remember that this a bad wnid.
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| wnid |  str |  | The wnid URL. |
-
 #### lighten
 
 **`Dex.lighten(color, percent)`**
@@ -169,21 +141,6 @@ Get an image from a URL. The URL might be bad so this function will test it to m
 | url |  str |  | The image URL. |
 
 _Returns:_  If this is a valid image URL, the image. Otherwise, this returns None.
-
-#### get_wnid_urls
-
-**`Dex.get_wnid_urls(wnid)`**
-
-_This is a static function._
-
-Try to get image URLs from a wnid.
-
-
-| Parameter | Type | Default | Description |
-| --- | --- | --- | --- |
-| wnid |  str |  | The wnid. |
-
-_Returns:_  A list of image URLs in the wnid. Can be empty.
 
 #### get_supported_string
 

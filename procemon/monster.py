@@ -83,16 +83,18 @@ class Monster:
         """
         self.strong_against: str = all_types[strength_index].monster_type
 
-        # Get a random word from each name.
-        words = []
+        """:field
+        The words used to generate the name.
+        """
+        self.words: List[str] = []
         for t in types:
-            words.append(choice(t.nouns))
+            self.words.append(choice(t.nouns))
 
         """:field
         The name of the monster.
         """
         self.name: str = ""
-        for i, w in enumerate(words):
+        for i, w in enumerate(self.words):
             # If the word is small, just take all of it.
             if len(w) <= 5:
                 self.name += w
@@ -125,7 +127,7 @@ class Monster:
         self.name = self.name.title()
 
         # Get a list of potential wiki words.
-        wikipedia_pages: List[str] = words[:]
+        wikipedia_pages: List[str] = self.words[:]
         shuffle(wikipedia_pages)
         for t in types:
             wikipedia_pages.insert(0, t.wikipedia)

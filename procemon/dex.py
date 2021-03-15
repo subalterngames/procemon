@@ -225,66 +225,80 @@ class Dex:
         no_images_path = IMAGES_DIRECTORY.joinpath("no_images.txt")
         no_images = no_images_path.read_text(encoding="utf-8").split("\n")
 
-        nouns = self.types[monster_type].nouns[:]
-        nouns.append(self.types[monster_type].wikipedia)
+        # Get the words used for each monster in the dex.
+        words: List[str] = [m.words[0] for m in self.monsters[monster_type].values()]
+
+        # Use these nouns if the noun in the list fails.
+        fallback_nouns = self.types[monster_type].nouns[:]
         # Skip any nouns that are known to not have images.
-        nouns = [n for n in nouns if n not in no_images]
+        fallback_nouns = [n for n in fallback_nouns if n not in no_images]
         # Randomize the list of nouns.
-        shuffle(nouns)
+        shuffle(fallback_nouns)
         # A dictionary of images, where the key is the URL.
         images: Dict[str, PngImageFile] = dict()
-        noun_index = 0
-        while len(images) < self.__num_monsters_per_type and noun_index < len(nouns):
-            n = nouns[noun_index]
-            noun_index += 1
-            # Try to get images from a Wikipedia page. If the page doesn't exist, remember not to try it again.
-            try:
-                resp = get(f"{Dex.WIKIPEDIA_API_URL}{n}", timeout=20)
-                if resp.status_code != 200 and resp.status_code != 301:
+
+        for i in range(len(words)):
+            # Prefer a Wikipedia page with the same name as the word.
+            nouns = [words[i]]
+            # Fallback: Any other noun in the monster type.
+            nouns.extend(fallback_nouns)
+            # Fallback: The general Wikipedia page.
+            nouns.append(self.types[monster_type].wikipedia)
+            got_image = False
+            for n in nouns:
+                if got_image:
+                    break
+                # Try to get images from a Wikipedia page. If the page doesn't exist, remember not to try it again.
+                try:
+                    resp = get(f"{Dex.WIKIPEDIA_API_URL}{n}", timeout=20)
+                    if resp.status_code != 200 and resp.status_code != 301:
+                        no_images.append(n)
+                        continue
+                    data = resp.json()
+                except ConnectionError:
                     no_images.append(n)
                     continue
-                data = resp.json()
-            except ConnectionError:
-                no_images.append(n)
-                continue
-            except ReadTimeout:
-                no_images.append(n)
-                continue
-            # This page doesn't exist.
-            if "query" not in data:
-                no_images.append(n)
-                continue
-            urls: List[str] = list()
-            for page in data["query"]["pages"]:
-                # Pages with IDs are logos or icons.
-                if "pageid" in data["query"]["pages"][page]:
+                except ReadTimeout:
+                    no_images.append(n)
                     continue
-                for image_info in data["query"]["pages"][page]["imageinfo"]:
-                    urls.append(image_info["url"])
-            if len(urls) == 0:
-                no_images.append(n)
-                continue
-            for url in urls:
-                # Skip URLs that we've already added.
-                if url in images:
+                # This page doesn't exist.
+                if "query" not in data:
+                    no_images.append(n)
                     continue
-                # Try to convert the image URL into a PIL image.
-                img = Dex.get_image_from_url(url=url)
-                if img is None:
+                urls: List[str] = list()
+                for page in data["query"]["pages"]:
+                    # Pages with IDs are logos or icons.
+                    if "pageid" in data["query"]["pages"][page]:
+                        continue
+                    for image_info in data["query"]["pages"][page]["imageinfo"]:
+                        urls.append(image_info["url"])
+                if len(urls) == 0:
+                    no_images.append(n)
                     continue
-                # Convert to grayscale.
-                img = ImageOps.grayscale(img)
-                # Increase the contrast.
-                img = ImageOps.autocontrast(img)
-                # Resize.
-                img = img.resize((32, 32), Image.LANCZOS)
-                # Colorize using the palette color for this type.
-                img = ImageOps.colorize(img, black="black",
-                                        white=Dex.LIGHT_COLORS[self.color_indices[monster_type]])
-                # Enlarge.
-                img = img.resize((400, 400), Image.NEAREST)
-                # Append the image.
-                images[url] = img
+                for url in urls:
+                    # Skip URLs that we've already added.
+                    if url in images:
+                        continue
+                    # Try to convert the image URL into a PIL image.
+                    img = Dex.get_image_from_url(url=url)
+                    if img is None:
+                        continue
+                    # Convert to grayscale.
+                    img = ImageOps.grayscale(img)
+                    # Increase the contrast.
+                    img = ImageOps.autocontrast(img)
+                    # Resize.
+                    img = img.resize((32, 32), Image.LANCZOS)
+                    # Colorize using the palette color for this type.
+                    img = ImageOps.colorize(img, black="black",
+                                            white=Dex.LIGHT_COLORS[self.color_indices[monster_type]])
+                    # Enlarge.
+                    img = img.resize((400, 400), Image.NEAREST)
+                    # Append the image.
+                    images[url] = img
+                    # Got an image for this card.
+                    got_image = True
+                    break
         # Remember the nouns that don't have images.
         no_images_path.write_text(("\n".join(list(sorted(set(no_images))))).strip(), encoding="utf-8")
         return list(images.values())

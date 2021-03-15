@@ -28,6 +28,8 @@ A monster has a name, two types, two moves, and some flavor text.
 
 - `strong_against` The type of monster that this monster is strong against.
 
+- `words` The words used to generate the name.
+
 - `name` The name of the monster.
 
 - `description` A description of the monster.
