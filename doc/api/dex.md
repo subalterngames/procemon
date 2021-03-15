@@ -18,6 +18,7 @@ When created, the dex will randomly select types and moods, assign verbs and adj
 | `ENERGY_DIRECTORY` | Path | The path to the energy icons. |
 | `SUPPORTED_CHARACTERS` | List[str] | A list of all Unicode characters supported by the font. Source: https://stackoverflow.com/a/58232763 |
 | `WIKIPEDIA_API_URL` | str | Base URL for the Wikipedia API. Source: https://stackoverflow.com/a/41807620 |
+| `URL_EXCLUDE` | List[str] | Ignore these image URLs. |
 
 ***
 

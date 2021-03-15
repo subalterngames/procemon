@@ -51,7 +51,8 @@ class CardBack:
         region = f"{region} Region"
         # Center the text.
         region_x = int(card.size[0] - font.getsize(region)[0] - pad)
-        draw.text((region_x, pad), region, "white", font=font)
+        region_y = pad + 4
+        draw.text((region_x, region_y), region, "white", font=font)
         # Draw a cool symbol.
         symbol_font = ImageFont.truetype(str(SYMBOL_FONT.resolve()), 24)
         symbol_x = region_x - symbol_font.getsize(symbol)[0] - 12

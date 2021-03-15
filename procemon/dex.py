@@ -57,6 +57,10 @@ class Dex:
     """
     WIKIPEDIA_API_URL: str = "https://en.wikipedia.org/w/api.php?action=query&prop=imageinfo&format=json&iiprop=url" \
                              "&generator=images&titles="
+    """:class_var
+    Ignore these image URLs.
+    """
+    URL_EXCLUDE: List[str] = ["https://upload.wikimedia.org/wikipedia/commons/7/74/Red_Pencil_Icon.png"]
 
     def __init__(self, num_types: int = 12, num_monsters_per_type: int = 9, quiet: bool = False):
         """
@@ -277,7 +281,9 @@ class Dex:
                     continue
                 for url in urls:
                     # Skip URLs that we've already added.
-                    if url in images:
+                    # Skip svg files because they're usually maps, icons, logos, etc.
+                    # Skip any other known logos.
+                    if url in images or ".svg" in url or url.endswith(".webm") or url in Dex.URL_EXCLUDE:
                         continue
                     # Try to convert the image URL into a PIL image.
                     img = Dex.get_image_from_url(url=url)

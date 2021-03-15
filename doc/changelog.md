@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.5.1
+
+- Fixed: Region name on card back is slightly vertically askew
+- Fixed: OSError due to .webm files being treated as regular image files
+- Fixed: Various Wikipedia icons are often used as card images
+  - (Backend): Added class variable `URL_EXCLUDE` Excluded image URLs
+
 ## 1.5.0
 
 - Fixed: Images can't be generated because Imagenet removed its API! Now, Procemon now scrapes Wikipedia images instead
