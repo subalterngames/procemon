@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.5.2
+
+- Removed a few adjectives and verbs that we never want
+
 ## 1.5.1
 
 - Fixed: Region name on card back is slightly vertically askew

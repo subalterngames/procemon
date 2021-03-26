@@ -63,7 +63,7 @@ class Zine:
             pdf.image(str(card_paths[i + 1].resolve()), right_x, 1, w, h)
             page += 1
             i += 2
-        zine_path = dex_path.joinpath("zine.pdf")
+        zine_path = dex_path.joinpath(f"{dex_path.name}.pdf")
         pdf.output(str(zine_path.resolve()))
         if not quiet:
             print("...Done!")

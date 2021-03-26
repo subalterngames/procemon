@@ -9,7 +9,6 @@ argue
 armor
 arrest
 assassinate
-assault
 assert
 assume
 assure

@@ -377,7 +377,6 @@ aspirate
 aspire
 assail
 assassinate
-assault
 assay
 assemble
 assent
@@ -6093,11 +6092,8 @@ nidificate
 nidify
 niello
 niff
-niggardise
-niggardize
 niggle
 night-club
-nigrify
 nill
 nip
 nitpick
@@ -9162,7 +9158,6 @@ stake
 stalagmometer
 stale
 stalemate
-stalk
 stall
 stammer
 stamp

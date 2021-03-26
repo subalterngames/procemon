@@ -1319,7 +1319,6 @@ aspiring
 asprawl
 asquint
 assailable
-assault
 assayable
 assentient
 assenting
@@ -12953,8 +12952,6 @@ niffy
 niftier
 niftiest
 nifty
-niggard
-niggardly
 niggling
 nigh
 night
@@ -18530,9 +18527,7 @@ stalagmitic
 stalagmitical
 stalagmometer
 stale
-stalking
 stalkless
-stalky
 stalwart
 stalworth
 staminal
