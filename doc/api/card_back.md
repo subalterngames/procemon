@@ -10,6 +10,8 @@ Create an image of the back of a card.
 
 **`CardBack.get(region, symbol)`**
 
+**`CardBack.get(region, symbol, printable=False)`**
+
 _This is a static function._
 
 
@@ -17,6 +19,7 @@ _This is a static function._
 | --- | --- | --- | --- |
 | region |  str |  | The name of the dex region. |
 | symbol |  str |  | The region's symbol. |
+| printable |  bool  | False | If True, make this card printable on a black and white printer. |
 
 _Returns:_  An image of a card back.
 

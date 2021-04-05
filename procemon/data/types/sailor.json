@@ -8,8 +8,7 @@
     "pilot",
     "sailing",
     "star",
-    "submarine",
-    "teenage"
+    "submarine"
   ],
   "imagenet": "sailor",
   "monster_type": "sailor",
@@ -57,7 +56,6 @@
     "skipper",
     "soldier",
     "star",
-    "woman",
     "yacht"
   ],
   "wikipedia": "Sailor"

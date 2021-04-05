@@ -2010,15 +2010,12 @@ bivariate
 biyearly
 bizarre
 bizonal
-black
 black-and-blue
-black-and-tan
 black-and-white
 black-figure
 black-letter
 blackened
 blackguardly
-blackish
 bladdery
 blae
 blah
@@ -3784,8 +3781,6 @@ condylomatous
 confabulatory
 confarreate
 confectionary
-confederate
-confederative
 conferential
 conferrable
 conferva
@@ -4237,11 +4232,9 @@ crabbiest
 crabby
 crablike
 crabwise
-crack
 crackajack
 cracker-barrel
 crackerjack
-crackers
 cracking
 crackjaw
 crackle
@@ -8550,7 +8543,6 @@ gynodioecious
 gynomonoecious
 gypseous
 gypsiferous
-gypsy
 gyral
 gyrate
 gyrational
@@ -19603,8 +19595,6 @@ tectonic
 tectricial
 tedious
 teeming
-teen
-teenage
 teenier
 teeniest
 teensy

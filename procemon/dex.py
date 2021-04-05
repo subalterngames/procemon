@@ -410,8 +410,42 @@ class Dex:
         move_text_x = img_box_shape_x
         move_y = img_box_shape_y + img_box_shape_d + 22
 
-        # Remember where to put the strength.
-        move_y_0 = move_y
+        # Add the strength.
+        f_strength = ImageFont.truetype(font_file, 22)
+        strength_text = f"x2 vs. {monster.strong_against.title()}"
+        strength = Image.new('RGBA', f_strength.getsize(strength_text))
+        strength_color = list(Dex.DARK_COLORS[self.color_indices[monster.strong_against]])
+        strength_color.append(255)
+        draw_txt = ImageDraw.Draw(strength)
+        draw_txt.text((0, 0), strength_text, font=f_strength, fill=tuple(strength_color))
+        strength = strength.rotate(-90, expand=1)
+        strength_text_x = card.size[0] - pad_x - 16
+        strength_text_y = move_y
+        # Draw a black box.
+        strength_box_x = strength_text_x - 16
+        strength_box_y = strength_text_y - 16
+        strength_box_size = (strength_box_x + pad_x, strength_box_y + strength.size[1] + 24)
+        draw.rectangle([(strength_box_x, strength_box_y), strength_box_size], fill=black)
+        card.paste(strength, (strength_text_x, strength_text_y), mask=strength)
+
+        # If the strength box goes really far down, then the rows of description text need to be shorter.
+        if strength_box_size[1] > 920:
+            desc_width = 30
+        else:
+            desc_width = 32
+        # Add the description.
+        desc_text_x = move_x
+        f_desc = ImageFont.truetype(font_file, 18)
+        desc = f'“{monster.description}”'
+        desc_lines = textwrap.wrap(desc, width=desc_width)
+        desc_height = 0
+        desc_heights = []
+        for line in desc_lines:
+            line_size = f_desc.getsize(line)
+            height = int(line_size[1] * 1.1)
+            desc_height += height
+            desc_heights.append(height)
+        desc_text_y = card.size[1] - 52 - desc_height
 
         f_move_special = ImageFont.truetype(font_file, 18)
         f_move_damage = ImageFont.truetype(font_file, 28)
@@ -460,12 +494,17 @@ class Dex:
             # Print the move.
             draw.text((move_text_x, move_text_y), m.name, black, font=f_move)
             lines = textwrap.wrap(m.special, width=24)
-            line_y = d_move_y
+
+            if m.damage > 0:
+                end_move_y = move_text_y + f_move_damage.getsize(f"{m.damage}")[1] + 12
+            else:
+                end_move_y = move_text_y + move_font_text_size[1] + 12
+            end_special_y = end_move_y
             for line in lines:
                 line_size = f_move_special.getsize(line)
-                line_y += line_size[1] + 8
+                end_special_y += line_size[1] + 8
             # If there's too much special text, don't print it!
-            if move_text_y + move_font_text_size[1] + 12 >= 930:
+            if end_special_y > desc_text_y:
                 m.special = ""
                 lines.clear()
                 m.damage = 1
@@ -504,42 +543,6 @@ class Dex:
                 draw.line(last_line, fill=black, width=2)
 
             move_y += 12
-        # Add the strength.
-        f_strength = ImageFont.truetype(font_file, 22)
-        strength_text = f"x2 vs. {monster.strong_against.title()}"
-        strength = Image.new('RGBA', f_strength.getsize(strength_text))
-        strength_color = list(Dex.DARK_COLORS[self.color_indices[monster.strong_against]])
-        strength_color.append(255)
-        draw_txt = ImageDraw.Draw(strength)
-        draw_txt.text((0, 0), strength_text, font=f_strength, fill=tuple(strength_color))
-        strength = strength.rotate(-90, expand=1)
-        strength_text_x = card.size[0] - pad_x - 16
-        strength_text_y = move_y_0
-        # Draw a black box.
-        strength_box_x = strength_text_x - 16
-        strength_box_y = strength_text_y - 16
-        strength_box_size = (strength_box_x + pad_x, strength_box_y + strength.size[1] + 24)
-        draw.rectangle([(strength_box_x, strength_box_y), strength_box_size], fill=black)
-        card.paste(strength, (strength_text_x, strength_text_y), mask=strength)
-
-        # If the strength box goes really far down, then the rows of description text need to be shorter.
-        if strength_box_size[1] > 920:
-            desc_width = 30
-        else:
-            desc_width = 32
-        # Add the description.
-        desc_text_x = move_x
-        f_desc = ImageFont.truetype(font_file, 18)
-        desc = f'“{monster.description}”'
-        desc_lines = textwrap.wrap(desc, width=desc_width)
-        desc_height = 0
-        desc_heights = []
-        for line in desc_lines:
-            line_size = f_desc.getsize(line)
-            height = int(line_size[1] * 1.1)
-            desc_height += height
-            desc_heights.append(height)
-        desc_text_y = card.size[1] - 52 - desc_height
 
         # Add a line if it's not too low.
         if desc_text_y - 8 > last_line[0][1]:

@@ -1,11 +1,13 @@
 Musical_instrument
 Sphere
+abdallahsaurus
 abrocome
 abrolhos
 abysm
 aegerine
 afghan
 afters
+aires
 akee
 alehouse
 algarroba
@@ -21,8 +23,10 @@ andhi
 andrenid
 angiocarp
 angrecum
+anisim
 annulet
 aperea
+applique
 arariba
 arctiid
 argil
@@ -43,7 +47,9 @@ baranduki
 bargeman
 barguzin
 barite
+barong
 barretter
+bartons
 barunduki
 basso
 bathypelagic
@@ -59,8 +65,10 @@ bixbite
 blacksnake
 blacktooth
 blackwall
+blanquillo
 blennioid
 blinker
+blinks
 bloomer
 blowball
 blucher
@@ -72,6 +80,7 @@ bombycid
 boots
 bora
 bowen
+boxer
 boxfish
 brachyuran
 brackish
@@ -83,6 +92,7 @@ breakaxe
 breastpin
 breath
 briar
+briggs
 britt
 broadbill
 bronc
@@ -98,6 +108,7 @@ calisaya
 canaib
 candyfloss
 candytuft
+cantala
 capibara
 caplin
 caranda
@@ -122,6 +133,7 @@ chaulmoogra
 chelan
 chichipe
 chignon
+chihuahuasaurus
 chilaca
 chinch
 chinquapin
@@ -137,6 +149,7 @@ cirripede
 clarence
 clavichord
 cleats
+cleavers
 clemons
 clerid
 clingfish
@@ -152,8 +165,10 @@ coiffure
 coign
 coigne
 colewort
+collman
 colors
 conacaste
+conductive
 confect
 confidential
 constrictor
@@ -168,6 +183,7 @@ cottonmouth
 courad
 courbaril
 cowage
+cowbarn
 cowhouse
 crammer
 crampon
@@ -180,6 +196,8 @@ crownbeard
 cuckoopint
 cufflinks
 culantro
+cuppa
+curiosa
 currajong
 customhouse
 cyder
@@ -225,13 +243,20 @@ edelweiss
 eggar
 eggcup
 eight
+elapid
+encolure
 endogen
 enlightening
 enviable
+eobrontosaurus
+eruption
 escritoire
 eugongbusaurus
 euroclydon
+ewalt
 expansive
+exposed
+extra-tropical
 fabric
 fallawater
 farmdog
@@ -257,6 +282,7 @@ gascoyne
 gayfeather
 gelechiid
 geometrid
+gerbil
 gerbille
 ghillie
 gillyflower
@@ -266,6 +292,7 @@ girasol
 glassware
 glasswork
 globeflower
+glowing
 gnawer
 goatsbeard
 goldenbush
@@ -282,6 +309,7 @@ grillroom
 grimes
 grindle
 guesthouse
+guidebook
 guths
 gypsyweed
 gyre
@@ -297,6 +325,7 @@ hawkmoth
 hayfork
 headlight
 healing
+heeler
 hegari
 heilongjiangosaurus
 helpful
@@ -313,11 +342,13 @@ homonculus
 homopteran
 horehound
 horsebean
+houselights
 huaraches
 hungarian
 hydrophyte
 hylosaurus
 hymnbook
+iaidō
 icaco
 icestorm
 idocrase
@@ -332,10 +363,13 @@ isopod
 issasaurus
 jaboticaba
 jacksmelt
+jail
 jambul
 jessamine
 jiqui
+jird
 jongleur
+jupati
 kalantas
 kaoliang
 kaolin
@@ -346,6 +380,7 @@ kasaï
 kato
 katydid
 kauri
+kentrurosaurus
 kittul
 klemheist
 knicker
@@ -379,6 +414,7 @@ lights
 lignosae
 lilac
 liman
+linking
 linville
 loaner
 lobefin
@@ -398,6 +434,7 @@ marasuchus
 marblewood
 marchpane
 mariner
+marlinespike
 marquis
 marri
 matchbox
@@ -406,6 +443,8 @@ matzoh
 mazzard
 meadowgrass
 meatballs
+megathrust
+meloid
 meltemi
 mercerised
 merganser
@@ -417,6 +456,7 @@ micropyle
 mid-ocean
 milkette
 milkwagon
+milliput
 minicab
 minicar
 minuano
@@ -425,8 +465,11 @@ mixteca
 mocassin
 modelling
 moldboard
+monocot
 motortruck
+mountaingoat
 moustachio
+mudcat
 mulato
 munjeet
 musjid
@@ -440,12 +483,14 @@ nanotyrannosaurus
 natural
 neckband
 neuropteron
+newfane
 nguni
 nicad
 nigeq
 noctuid
 nonstarter
 nosewheel
+nothingness
 nutgrass
 nutricline
 nymphalid
@@ -468,6 +513,7 @@ paigle
 paintbox
 pakchoi
 palsgrave
+pampero
 panoche
 panzer
 paperknife
@@ -487,6 +533,7 @@ photoflash
 photoflood
 piccolo
 pierid
+pillar
 pimento
 pincer
 pinon
@@ -508,6 +555,7 @@ pole-reinforced
 polisher
 pollyfish
 poniente
+popoff
 poppleton
 poteen
 pothouse
@@ -536,6 +584,7 @@ remise
 revealing
 ricegrass
 ringhals
+riverine
 roadbook
 roaring
 roble
@@ -580,12 +629,14 @@ sheldrake
 shellbark
 shoofly
 shoveller
+shroeder
 shroud
 shumac
 sickbed
 silkgrass
 silverspot
 silverweed
+sinnet
 sisham
 sissoo
 sitar
@@ -606,6 +657,7 @@ slippery
 smoky
 snipefish
 snowdrop
+snowfall
 snuffers
 soapsuds
 soapweed
@@ -618,12 +670,14 @@ southerly
 spalding
 spherule
 sphingid
+splayed
 splitworm
 sprag
 staggerbush
 steerer
 steersman
 stickpin
+stinson
 stomatopod
 strangle
 strawflower
@@ -645,6 +699,7 @@ sweet
 sweetmeat
 swimwear
 tabouret
+taillight
 talipot
 tamarack
 tambourine
@@ -660,6 +715,7 @@ theater
 theremin
 thistledown
 thoughtful
+thrip
 thumbnut
 thysanopter
 tiepin
@@ -688,17 +744,20 @@ tusseh
 tusser
 tussore
 tussur
+twined
 ugrosaurus
 ukulele
 unabridged
 undercoat
 undersoil
+urbanite
 uruguayo
 vanderspiegel
 vandyke
 veronica
 verticil
 vervain
+vicarage
 vocaliser
 vocalist
 vocalizer
@@ -714,6 +773,7 @@ waterleaf
 waterproof
 waterwheel
 whipping
+whipsnake
 whipstitch
 widgeon
 wiesenboden

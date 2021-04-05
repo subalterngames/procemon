@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.5.3
+
+- Removed some bad words
+- Added an option to make card back images printer-friendly
+- Fixed: Sometimes, the text of the second move on the card overlaps with the flavor text (this is probably _actually really actually_ fixed now)
+
 ## 1.5.2
 
 - Removed a few adjectives and verbs that we never want

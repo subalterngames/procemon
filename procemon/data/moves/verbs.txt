@@ -794,7 +794,6 @@ bituminize
 bivouac
 blab
 blabber
-black
 blackball
 blackberry
 blackbird
@@ -803,8 +802,6 @@ blackguard
 blackjack
 blacklead
 blackleg
-blacklist
-blackmail
 blackout
 blacktop
 blah
@@ -1963,7 +1960,6 @@ cox
 coze
 cozen
 crab
-crack
 crackle
 cradle
 craft

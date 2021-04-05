@@ -11,7 +11,7 @@ class Zine:
     """
 
     @staticmethod
-    def create(dex_path: Path, card_back: PngImageFile, num_pages: int = 13, quiet: bool = False) -> None:
+    def create(dex_path: Path, card_back: PngImageFile, num_pages: int = 13, quiet: bool = False) -> Path:
         """
         Create a zine from a dex of cards. To create the cards, see: `Dex.create_cards()`
 
@@ -19,6 +19,8 @@ class Zine:
         :param card_back: The image for the back of the card.
         :param num_pages: Number of pages in the zine.
         :param quiet: If True, suppress console output.
+
+        :return: The path to the zine PDF.
         """
 
         if not quiet:
@@ -68,3 +70,4 @@ class Zine:
         if not quiet:
             print("...Done!")
             print(zine_path.resolve())
+        return zine_path
